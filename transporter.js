@@ -25,9 +25,9 @@ var transporter = {
             var p = creep.memory.s;
             const targets = Game.rooms[p].find(FIND_STRUCTURES, {
                 filter: object => {
-                    return ((object.structureType == STRUCTURE_CONTAINER && object.id != '5e896838b9e23c0fb2b26d4d') ||
+                    return ((object.structureType == STRUCTURE_CONTAINER) ||
                             (object.structureType == STRUCTURE_TERMINAL && object.store.energy > 0 )) &&
-                            object.store.energy > 0;
+                             object.store.energy > 0;
                 }
             });
             targets.sort((a,b) => a.store.energy < b.store.energy);

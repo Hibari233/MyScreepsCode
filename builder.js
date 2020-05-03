@@ -14,7 +14,8 @@ var builder = {
             }
         }
         else {
-            /*
+            
+            
             const targets = creep.room.find(FIND_STRUCTURES, {
                 filter: object => {
                     return (object.structureType == STRUCTURE_STORAGE) &&
@@ -24,7 +25,7 @@ var builder = {
             if(creep.withdraw(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
             }
-            */
+            
             /*
             const target = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
             if(target) {
@@ -36,7 +37,7 @@ var builder = {
             /*
             const targets = creep.room.find(FIND_STRUCTURES, {
                 filter: object => {
-                    return (object.structureType == STRUCTURE_CONTAINER && object.id != '5e896838b9e23c0fb2b26d4d') &&
+                    return (object.structureType == STRUCTURE_TOWER) &&
                             object.store.energy > 0;
                 }
             });
@@ -47,7 +48,7 @@ var builder = {
                 creep.moveTo(targets[0]);
             }
             */
-            
+            /*
             var sources = creep.pos.findClosestByPath(FIND_SOURCES, {
                 filter: object => {
                     return object.energy != 0;
@@ -55,9 +56,8 @@ var builder = {
             });
             
             //var sources = creep.pos.findClosestByPath(FIND_SOURCES);
-                if(creep.harvest(sources) == ERR_NOT_IN_RANGE) {creep.moveTo(sources);}
-            
-            
+            if(creep.harvest(sources) == ERR_NOT_IN_RANGE) {creep.moveTo(sources);}
+            */
         }
 	}
 };
