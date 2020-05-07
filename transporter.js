@@ -10,7 +10,8 @@ var transporter = {
 	    if(creep.memory.transport) {
             const str = Game.rooms['W22S8'].find(FIND_STRUCTURES, {
                 filter: object => {
-                    return object.structureType == STRUCTURE_STORAGE &&
+                    return (object.structureType == STRUCTURE_TERMINAL ||
+                            object.structureType == STRUCTURE_STORAGE )&&
                             object.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
                 }
             });
@@ -25,8 +26,7 @@ var transporter = {
             var p = creep.memory.s;
             const targets = Game.rooms[p].find(FIND_STRUCTURES, {
                 filter: object => {
-                    return ((object.structureType == STRUCTURE_CONTAINER) ||
-                            (object.structureType == STRUCTURE_TERMINAL && object.store.energy > 0 )) &&
+                    return object.structureType == STRUCTURE_CONTAINER &&
                              object.store.energy > 0;
                 }
             });

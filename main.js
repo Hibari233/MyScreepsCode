@@ -187,7 +187,7 @@ module.exports.loop = function () {
             {memory: {role: 'transporter', s: 'W22S8'}});        
     }
     
-    if(transporter2s.length < 4) {
+    if(transporter2s.length < 3) {
         var newName = 'transporter2_' + Game.time;
         console.log('Spawning new transporter2: ' + newName);
         Game.spawns['Hibari'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
@@ -230,7 +230,7 @@ module.exports.loop = function () {
         var newName = 'guarder2_' + Game.time;
         console.log('Spawning new guarder2: ' + newName);
         Game.spawns['Hibari'].spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'guarder', s: 'W23S9'}});        
+            {memory: {role: 'guarder', s: 'W23S9'}});
     }
 
     // #########################   others  #############################
@@ -256,7 +256,7 @@ module.exports.loop = function () {
             {memory: {role: 'upgrader'}});        
     }
 
-    if(builders.length < 1) {
+    if(builders.length < 0) {
         var newName = 'builder_' + Game.time;
         console.log('Spawning new builder: ' + newName);
         Game.spawns['Hibari2'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
@@ -336,6 +336,21 @@ module.exports.loop = function () {
     });
     if(links[1].store.energy == 0) {links[0].transferEnergy(links[1]);}
     
+    
+    
+    /*
+    const amountToSell = 2000, maxTransferEnergyCost = 2000;
+    const orders = Game.market.getAllOrders({type: ORDER_BUY, resourceType: RESOURCE_ENERGY});
+
+    for(let i=0; i<orders.length; i++) {
+        const transferEnergyCost = Game.market.calcTransactionCost(amountToSell, 'W22S8', orders[i].roomName);
+
+        if(transferEnergyCost < maxTransferEnergyCost) {
+            Game.market.deal(orders[i].id, amountToSell, "W22S8");
+            break;
+        }
+    }
+    */
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
         if(creep.memory.role == 'drone') {
@@ -348,7 +363,7 @@ module.exports.loop = function () {
             upgrader.run(creep);
         }
         if(creep.memory.role == 'builder') {
-            if(!creep.pos.inRangeTo(Game.flags.W22S8,24)) creep.moveTo(Game.flags.W22S8);
+            if(!creep.pos.inRangeTo(Game.flags.W23S9,24)) creep.moveTo(Game.flags.W23S9);
             else {
                 builder.run(creep);
             }
