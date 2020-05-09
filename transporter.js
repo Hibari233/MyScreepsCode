@@ -17,7 +17,7 @@ var transporter = {
             });
             //console.log(str[0]);
             if(creep.transfer(str[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(str[0], {visualizePathStyle: {stroke: '#ffffff'}});
+                creep.moveTo(str[0], {visualizePathStyle: {stroke: '#ffffff', reusePath: 50}});
             }
             //console.log(creep.transfer(str[0], RESOURCE_ENERGY));
         }
@@ -32,7 +32,7 @@ var transporter = {
             });
             targets.sort((a,b) => a.store.energy < b.store.energy);
             if(creep.withdraw(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+                creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff', reusePath: 50}});
             }
             
             /*
