@@ -16,4 +16,6 @@ module.exports.stateScanner = function () {
     Memory.stats.energy_W22S8 = Game.rooms['W22S8'].storage.store.energy;
     Memory.stats.rcl_W22S8 = Game.rooms['W22S8'].controller.level;
     Memory.stats.rcl_progress_W22S8 = (Game.rooms['W22S8'].controller.progress/Game.rooms['W22S8'].controller.progressTotal) * 100;
+    Memory.stats.rcl_W23S12 = Game.rooms['W23S12'].controller.level;
+    Memory.stats.rcl_progress_W23S12 = (Game.rooms['W23S12'].controller.progress/Game.rooms['W23S12'].controller.progressTotal) * 100;
 }

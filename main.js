@@ -23,7 +23,7 @@ module.exports.loop = function () {
     var drone4_num = 1;
     var drone5_num = 1;
     var drone6_num = 1;
-    var drone7_num = 1;
+    var drone7_num = 3;
     var mdrones1_num = 0;
     var scouts1_num = 1;
     var scouts2_num = 1;
@@ -38,13 +38,15 @@ module.exports.loop = function () {
     var guarder1s_num = 1;
     var guarder2s_num = 1;
     var repairers_num = 1;
-    var queens_num = 1;
+    var queen1s_num = 1;
+    var queen2s_num = 0;
     var upgrader1s_num = 1;
-    var upgrader2s_num = 1;
-    var builders_num = 1;
-    var smallqueens_num = 1;
+    var upgrader2s_num = 20;
+    var builders_num = 0;
+    var smallqueen1s_num = 1;
+    var smallqueen2s_num = 2;
     var chargers_num = 1;
-    var claimers_num = 1;
+    var claimers_num = 0;
 
     for(const name in Memory.creeps) {
         if(!Game.creeps[name]) {
@@ -76,8 +78,10 @@ module.exports.loop = function () {
     var upgrader1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcabb19099fc012e63421f');
     var upgrader2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcaba59099fc012e6340a8');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
-    var queens = _.filter(Game.creeps, (creep) => creep.memory.role == 'queen');
-    var smallqueens = _.filter(Game.creeps, (creep) => creep.memory.role == 'smallqueen');
+    var queen1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'queen' && creep.memory.source == '5e8ad848acf3f319ef9cb795');
+    var queen2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'queen' && creep.memory.source == '5eba5ce382955b66aa038594');
+    var smallqueen1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'smallqueen');
+    var smallqueen2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'smallqueen');
     var chargers = _.filter(Game.creeps, (creep) => creep.memory.role == 'charger');
     var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
     var claimers = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer');
@@ -106,8 +110,10 @@ module.exports.loop = function () {
         console.log('upgrader1s: ' + upgrader1s.length);
         console.log('upgrader2s: ' + upgrader2s.length);
         console.log('builders: ' + builders.length);
-        console.log('queens: ' + queens.length);
-        console.log('smallqueens: ' + smallqueens.length);
+        console.log('queen1s: ' + queen1s.length);
+        console.log('queen2s: ' + queen2s.length);
+        console.log('smallqueen1s: ' + smallqueen1s.length);
+        console.log('smallqueen2s: ' + smallqueen2s.length);
         console.log('chargers: ' + chargers.length);
         console.log('repairers: ' + repairers.length);
         console.log('claimers: ' + claimers.length);
@@ -270,11 +276,18 @@ module.exports.loop = function () {
             {memory: {role: 'repairer'}});        
     }
 
-    if(queens.length < queens_num) {
-        var newName = 'queen_' + Game.time;
-        if(show_details) console.log('Spawning new queen: ' + newName);
+    if(queen1s.length < queen1s_num) {
+        var newName = 'queen1_' + Game.time;
+        if(show_details) console.log('Spawning new queen1: ' + newName);
         Game.spawns['Hibari'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'queen'}});
+            {memory: {role: 'queen', source: '5e8ad848acf3f319ef9cb795'}});
+    }
+
+    if(queen2s.length < queen2s_num) {
+        var newName = 'queen2_' + Game.time;
+        if(show_details) console.log('Spawning new queen2: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'queen', source: '5eba5ce382955b66aa038594'}});
     }
 
     if(upgrader1s.length < upgrader1s_num) {
@@ -287,7 +300,7 @@ module.exports.loop = function () {
     if(upgrader2s.length < upgrader2s_num) {
         var newName = 'upgrader2_' + Game.time;
         if(show_details) console.log('Spawning new upgrader2: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([WORK,CARRY,MOVE], newName, 
+        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,CARRY,CARRY,MOVE,MOVE], newName, 
             {memory: {role: 'upgrader',source: '5c8c6693c533655f35a13f0a',controller: '5bbcaba59099fc012e6340a8'}});
     }
 
@@ -298,11 +311,18 @@ module.exports.loop = function () {
             {memory: {role: 'builder'}});
     }
     
-    if(smallqueens.length < smallqueens_num) {
-        var newName = 'smallqueen_' + Game.time;
-        if(show_details) console.log('Spawning new smallqueen: ' + newName);
+    if(smallqueen1s.length < smallqueen1s_num) {
+        var newName = 'smallqueen1_' + Game.time;
+        if(show_details) console.log('Spawning new smallqueen1: ' + newName);
         Game.spawns['Hibari'].spawnCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE], newName, 
-            {memory: {role: 'smallqueen'}});
+            {memory: {role: 'smallqueen', source: '5e8ad848acf3f319ef9cb795'}});
+    }
+
+    if(smallqueen2s.length < smallqueen2s_num) {
+        var newName = 'smallqueen2_' + Game.time;
+        if(show_details) console.log('Spawning new smallqueen2: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,MOVE,MOVE], newName, 
+            {memory: {role: 'smallqueen', source: '5eba5ce382955b66aa038594'}});
     }
 
     if(chargers.length < chargers_num) {
@@ -390,8 +410,14 @@ module.exports.loop = function () {
             upgrader.run(creep);
         }
         if(creep.memory.role == 'builder') {
+            /*
+            var str = Game.getObjectById('5c89e48e03c0d05f629a38a0');
+            if(creep.dismantle(str) == ERR_NOT_IN_RANGE){creep.moveTo(str);}
+            */
+            
             if(!creep.pos.inRangeTo(Game.flags.W23S12,24)) creep.moveTo(Game.flags.W23S12);
-            else {builder.run(creep);}
+                else {builder.run(creep);}
+            
         }
         if(creep.memory.role == 'scout') {
             scout.run(creep);
