@@ -23,10 +23,12 @@ module.exports.loop = function () {
     var drone4_num = 1;
     var drone5_num = 1;
     var drone6_num = 1;
+    var drone7_num = 1;
     var mdrones1_num = 0;
     var scouts1_num = 1;
     var scouts2_num = 1;
     var scouts3_num = 1;
+    var scouts4_num = 1;
     var transporter1s_num = 1;
     var transporter2s_num = 3;
     var transporter3s_num = 2;
@@ -37,11 +39,12 @@ module.exports.loop = function () {
     var guarder2s_num = 1;
     var repairers_num = 1;
     var queens_num = 1;
-    var upgraders_num = 1;
-    var builders_num = 0;
+    var upgrader1s_num = 1;
+    var upgrader2s_num = 1;
+    var builders_num = 1;
     var smallqueens_num = 1;
     var chargers_num = 1;
-    var claimers_num = 0;
+    var claimers_num = 1;
 
     for(const name in Memory.creeps) {
         if(!Game.creeps[name]) {
@@ -56,10 +59,12 @@ module.exports.loop = function () {
     var drones4 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source4');
     var drones5 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source5'); 
     var drones6 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source6');
+    var drones7 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source7');
     var mdrones1 = _.filter(Game.creeps, (creep) => creep.memory.role == 'mdrone' && creep.memory.s == 'mineral1');
     var scouts1 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W22S7');
     var scouts2 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S8');
     var scouts3 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S9'); 
+    var scouts4 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S13'); 
     var transporter1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W22S8');
     var transporter2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S8');
     var transporter3s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S9');
@@ -68,7 +73,8 @@ module.exports.loop = function () {
     var guarder2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'guarder' && creep.memory.s == 'W23S9');
     var transmitter1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transmitter' && creep.memory.s == 'W23S8');  
     var transmitter2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transmitter' && creep.memory.s == 'W23S9');
-    var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
+    var upgrader1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcabb19099fc012e63421f');
+    var upgrader2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcaba59099fc012e6340a8');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
     var queens = _.filter(Game.creeps, (creep) => creep.memory.role == 'queen');
     var smallqueens = _.filter(Game.creeps, (creep) => creep.memory.role == 'smallqueen');
@@ -84,6 +90,7 @@ module.exports.loop = function () {
         console.log('drones4: ' + drones4.length);
         console.log('drones5: ' + drones5.length);
         console.log('drones6: ' + drones6.length);
+        console.log('drones7: ' + drones7.length);
         console.log('mdrones1: ' + mdrones1.length);
         console.log('scouts1: ' + scouts1.length);
         console.log('scouts2: ' + scouts2.length);
@@ -96,7 +103,8 @@ module.exports.loop = function () {
         console.log('guarder2s: ' + guarder2s.length);
         console.log('transmitter1s: ' + transmitter1s.length);
         console.log('transmitter2s: ' + transmitter2s.length);
-        console.log('upgraders: ' + upgraders.length);
+        console.log('upgrader1s: ' + upgrader1s.length);
+        console.log('upgrader2s: ' + upgrader2s.length);
         console.log('builders: ' + builders.length);
         console.log('queens: ' + queens.length);
         console.log('smallqueens: ' + smallqueens.length);
@@ -147,6 +155,13 @@ module.exports.loop = function () {
         Game.spawns['Hibari2'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'drone', s: 'source6'}});        
     }
+
+    if(drones7.length < drone7_num) {
+        var newName = 'drone7_' + Game.time;
+        if(show_details) console.log('Spawning new drone7: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,CARRY,MOVE], newName, 
+            {memory: {role: 'drone', s: 'source7'}});        
+    }
     // #########################   mdrones  #############################
 
     if(mdrones1.length < mdrones1_num) {
@@ -178,6 +193,13 @@ module.exports.loop = function () {
         Game.spawns['Hibari'].spawnCreep([MOVE], newName, 
             {memory: {role: 'scout', s: 'W23S9'}});        
     }
+
+    if(scouts4.length < scouts4_num) {
+        var newName = 'scout4_' + Game.time;
+        if(show_details) console.log('Spawning new scout4: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([MOVE], newName, 
+            {memory: {role: 'scout', s: 'W23S13'}});
+    }
     // #########################   transporters  #############################
 
     if(transporter1s.length < transporter1s_num) {
@@ -204,7 +226,7 @@ module.exports.loop = function () {
     if(modern_transporters.length < modern_transporters_num) {
         var newName = 'modern_transporter_' + Game.time;
         if(show_details) console.log('Spawning new modern_transporter: ' + newName);
-        Game.spawns['Hibari2'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,MOVE,MOVE], newName, 
             {memory: {role: 'modern_transporter'}});
     }
     // #########################   transmitters  #############################
@@ -255,11 +277,18 @@ module.exports.loop = function () {
             {memory: {role: 'queen'}});
     }
 
-    if(upgraders.length < upgraders_num) {
-        var newName = 'upgrader_' + Game.time;
-        if(show_details) console.log('Spawning new upgrader: ' + newName);
+    if(upgrader1s.length < upgrader1s_num) {
+        var newName = 'upgrader1_' + Game.time;
+        if(show_details) console.log('Spawning new upgrader1: ' + newName);
         Game.spawns['Hibari'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'upgrader'}});
+            {memory: {role: 'upgrader',source: '5e8d48bbe1ebfe7eb1a00221',controller: '5bbcabb19099fc012e63421f'}});
+    }
+
+    if(upgrader2s.length < upgrader2s_num) {
+        var newName = 'upgrader2_' + Game.time;
+        if(show_details) console.log('Spawning new upgrader2: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([WORK,CARRY,MOVE], newName, 
+            {memory: {role: 'upgrader',source: '5c8c6693c533655f35a13f0a',controller: '5bbcaba59099fc012e6340a8'}});
     }
 
     if(builders.length < builders_num) {
@@ -286,7 +315,7 @@ module.exports.loop = function () {
     if(claimers.length < claimers_num) {
         var newName = 'claimer_' + Game.time;
         if(show_details) console.log('Spawning new claimer: ' + newName);
-        Game.spawns['Hibari'].spawnCreep([CLAIM,MOVE], newName, 
+        Game.spawns['Hibari'].spawnCreep([CLAIM,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'claimer'}});
     }
 
@@ -361,7 +390,7 @@ module.exports.loop = function () {
             upgrader.run(creep);
         }
         if(creep.memory.role == 'builder') {
-            if(!creep.pos.inRangeTo(Game.flags.W24S11,24)) creep.moveTo(Game.flags.W24S11);
+            if(!creep.pos.inRangeTo(Game.flags.W23S12,24)) creep.moveTo(Game.flags.W23S12);
             else {builder.run(creep);}
         }
         if(creep.memory.role == 'scout') {
@@ -386,7 +415,7 @@ module.exports.loop = function () {
             guarder.run(creep);
         }
         if(creep.memory.role == 'modern_transporter') {
-            modern_transporter.run(creep, '5eb6405b0ca530a8e52d5113', '5e8ad848acf3f319ef9cb795', RESOURCE_KEANIUM_OXIDE, true, false);
+            modern_transporter.run(creep, '5eba5ce382955b66aa038594', '5eba4d91883b9d3cef5a6376', RESOURCE_ENERGY, false, false);
         }
         if(creep.memory.role == 'claimer') {
             //if(!creep.pos.inRangeTo(Game.flags.W23S12,20)) creep.moveTo(Game.flags.W23S12);
