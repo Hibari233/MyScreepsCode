@@ -29,6 +29,9 @@ module.exports.loop = function () {
     var scouts2_num = 1;
     var scouts3_num = 1;
     var scouts4_num = 1;
+    var scouts5_num = 1;
+    var scouts6_num = 1;
+    var scouts7_num = 1;
     var transporter1s_num = 1;
     var transporter2s_num = 3;
     var transporter3s_num = 2;
@@ -39,12 +42,12 @@ module.exports.loop = function () {
     var guarder2s_num = 1;
     var repairers_num = 0;
     var queen1s_num = 1;
-    var queen2s_num = 0;
+    var queen2s_num = 1;
     var upgrader1s_num = 2;
     var upgrader2s_num = 0;
-    var builders_num = 2;
+    var builders_num = 4;
     var smallqueen1s_num = 1;
-    var smallqueen2s_num = 2;
+    var smallqueen2s_num = 1;
     var chargers_num = 1;
     var claimers_num = 0;
 
@@ -66,7 +69,10 @@ module.exports.loop = function () {
     var scouts1 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W22S7');
     var scouts2 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S8');
     var scouts3 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S9'); 
-    var scouts4 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S13'); 
+    var scouts4 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S13');
+    var scouts5 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W22S12');
+    var scouts6 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W22S13');
+    var scouts7 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W21S13'); 
     var transporter1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W22S8');
     var transporter2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S8');
     var transporter3s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S9');
@@ -79,9 +85,9 @@ module.exports.loop = function () {
     var upgrader2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcaba59099fc012e6340a8');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
     var queen1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'queen' && creep.memory.source == '5e8ad848acf3f319ef9cb795');
-    var queen2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'queen' && creep.memory.source == '5eba5ce382955b66aa038594');
-    var smallqueen1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'smallqueen');
-    var smallqueen2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'smallqueen');
+    var queen2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'queen' && creep.memory.source == '5ebc76fd6ae95c609c9c64cd');
+    var smallqueen1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'smallqueen' && creep.memory.source == '5e8ad848acf3f319ef9cb795');
+    var smallqueen2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'smallqueen' && creep.memory.source == '5ebc76fd6ae95c609c9c64cd');
     var chargers = _.filter(Game.creeps, (creep) => creep.memory.role == 'charger');
     var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
     var claimers = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer');
@@ -206,6 +212,27 @@ module.exports.loop = function () {
         Game.spawns['Hibari3'].spawnCreep([MOVE], newName, 
             {memory: {role: 'scout', s: 'W23S13'}});
     }
+
+    if(scouts5.length < scouts5_num) {
+        var newName = 'scout4_' + Game.time;
+        if(show_details) console.log('Spawning new scout4: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([MOVE], newName, 
+            {memory: {role: 'scout', s: 'W22S12'}});
+    }
+
+    if(scouts6.length < scouts6_num) {
+        var newName = 'scout4_' + Game.time;
+        if(show_details) console.log('Spawning new scout4: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([MOVE], newName, 
+            {memory: {role: 'scout', s: 'W22S13'}});
+    }
+
+    if(scouts7.length < scouts7_num) {
+        var newName = 'scout4_' + Game.time;
+        if(show_details) console.log('Spawning new scout4: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([MOVE], newName, 
+            {memory: {role: 'scout', s: 'W21S13'}});
+    }
     // #########################   transporters  #############################
 
     if(transporter1s.length < transporter1s_num) {
@@ -232,7 +259,7 @@ module.exports.loop = function () {
     if(modern_transporters.length < modern_transporters_num) {
         var newName = 'modern_transporter_' + Game.time;
         if(show_details) console.log('Spawning new modern_transporter: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'modern_transporter'}});
     }
     // #########################   transmitters  #############################
@@ -301,13 +328,13 @@ module.exports.loop = function () {
         var newName = 'upgrader2_' + Game.time;
         if(show_details) console.log('Spawning new upgrader2: ' + newName);
         Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'upgrader',source: '5ebc76fd6ae95c609c9c64cd',controller: '5bbcaba59099fc012e6340a8'}});
+            {memory: {role: 'upgrader',source: '5ebe186c26b7673a4ae868f9',controller: '5bbcaba59099fc012e6340a8'}});
     }
 
     if(builders.length < builders_num) {
         var newName = 'builder_' + Game.time;
         if(show_details) console.log('Spawning new builder: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,CARRY,CARRY,MOVE,MOVE], newName,
+        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
             {memory: {role: 'builder'}});
     }
     
@@ -380,6 +407,10 @@ module.exports.loop = function () {
             }
     });
     if(links[1].store.energy == 0) {links[0].transferEnergy(links[1]);}
+
+    var linkbase_W23S12 = Game.getObjectById('5ebdf6d91ba74871135b4bc0');
+    var linkto_W23S12 = Game.getObjectById('5ebe186c26b7673a4ae868f9');
+    if(linkto_W23S12.store.energy == 0) {linkbase_W23S12.transferEnergy(linkto_W23S12);}
     
     var base1 = Game.getObjectById('5eb5cb0d505937045f020767');
     var base2 = Game.getObjectById('5eb553d2a7d7c84181f3c070');
@@ -418,12 +449,14 @@ module.exports.loop = function () {
             upgrader.run(creep);
         }
         if(creep.memory.role == 'builder') {
-            /*
-            var str = Game.getObjectById('5c89e48e03c0d05f629a38a0');
+            
+            var str = Game.getObjectById('5c4b6bc6f957274b06aab0d9');
             if(creep.dismantle(str) == ERR_NOT_IN_RANGE){creep.moveTo(str);}
-            */
+            
+           /*
             if(!creep.pos.inRangeTo(Game.flags.W23S12,24)) creep.moveTo(Game.flags.W23S12);
                 else {builder.run(creep);}
+            */
         }
         if(creep.memory.role == 'scout') {
             scout.run(creep);
@@ -447,7 +480,7 @@ module.exports.loop = function () {
             guarder.run(creep);
         }
         if(creep.memory.role == 'modern_transporter') {
-            modern_transporter.run(creep, '5c8c89bec9a7e41e4912b2d4', '5ebc76fd6ae95c609c9c64cd', RESOURCE_ENERGY, false, false);
+            modern_transporter.run(creep, '5c8f0d155bea8e153b9472c7', '5ebc76fd6ae95c609c9c64cd', RESOURCE_ENERGY, false, false);
         }
         if(creep.memory.role == 'claimer') {
             //if(!creep.pos.inRangeTo(Game.flags.W23S12,20)) creep.moveTo(Game.flags.W23S12);
