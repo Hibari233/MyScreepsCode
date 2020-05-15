@@ -10,7 +10,8 @@ var repairer = {
 	    if(creep.memory.repairing) {
             var str = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return structure.structureType == STRUCTURE_RAMPART && structure.hits < 1000000;
+                    return (structure.structureType == STRUCTURE_RAMPART && structure.hits < 1000000) ||
+                            (structure.structureType == STRUCTURE_WALL && structure.hits < 1000000 );
                 }
             });
             //targets.sort((a,b) => a.hits - b.hits);
