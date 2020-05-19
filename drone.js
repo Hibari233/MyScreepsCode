@@ -30,7 +30,7 @@ var drone = {
         }
         else {
             var p = creep.memory.s;
-            if(!creep.pos.inRangeTo(Game.flags[p].pos,1)) creep.moveTo(Game.flags[p]);
+            if(!creep.pos.inRangeTo(Game.flags[p].pos,0)) creep.moveTo(Game.flags[p]);
             else {
                 var sources = creep.pos.findClosestByPath(FIND_SOURCES);
                 if(creep.harvest(sources) == ERR_NOT_IN_RANGE) {creep.moveTo(sources,{visualizePathStyle: {stroke: '#ffffff'}});}
