@@ -5,6 +5,7 @@ var tower = {
                 return (structure.structureType == STRUCTURE_EXTENSION ||
                         structure.structureType == STRUCTURE_CONTAINER ||
                         structure.structureType == STRUCTURE_ROAD ||
+                        structure.structureType == STRUCTURE_WALL && structure.hits < 10000 ||
                         structure.structureType == STRUCTURE_RAMPART && structure.hits < 100000) &&
                         structure.hits < structure.hitsMax;
                 }

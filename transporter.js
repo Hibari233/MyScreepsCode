@@ -8,21 +8,12 @@ var transporter = {
 	        creep.memory.transport = true;
         }
 	    if(creep.memory.transport) {
-            const str = Game.rooms['W22S8'].find(FIND_STRUCTURES, {
-                filter: object => {
-                    return (object.structureType == STRUCTURE_TERMINAL ||
-                            object.structureType == STRUCTURE_STORAGE )&&
-                            object.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-                }
-            });
-            //console.log(str[0]);
-            if(creep.transfer(str[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(str[0], {visualizePathStyle: {stroke: '#ffffff', reusePath: 50}});
+            var des = Game.getObjectById(creep.memory.des);
+            if(creep.transfer(des, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(des, {visualizePathStyle: {stroke: '#ffffff', reusePath: 50}});
             }
-            //console.log(creep.transfer(str[0], RESOURCE_ENERGY));
         }
         else {
-            
             var p = creep.memory.s;
             const targets = Game.rooms[p].find(FIND_STRUCTURES, {
                 filter: object => {
