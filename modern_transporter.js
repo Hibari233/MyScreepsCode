@@ -8,7 +8,8 @@ var modern_transporter = {
 	    if(!creep.memory.transport && creep.store.getFreeCapacity() == 0) {
 	        creep.memory.transport = true;
         }
-        if(_forcemove == true) creep.memory.transport = true;
+        var source = Game.getObjectById(_idget);
+        if(_forcemove == true || source.store.getUsedCapacity(_type) == 0) creep.memory.transport = true;
         if(creep.memory.transport || _back == true) {
             var str = Game.getObjectById(_idput);
             if(_type == 'ALL') {

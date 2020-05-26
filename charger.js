@@ -10,7 +10,8 @@ var charger = {
 	    if(creep.memory.charge) {
             const str = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: object => {
-                    return object.structureType == STRUCTURE_TOWER&&
+                    return (object.structureType == STRUCTURE_TOWER ||
+                            object.structureType == STRUCTURE_LAB ) &&
                             object.store.getFreeCapacity(RESOURCE_ENERGY) > 50;
                 }
             });
