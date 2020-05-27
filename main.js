@@ -44,15 +44,17 @@ module.exports.loop = function () {
     var transmitter2s_num = 1;
     var transmitter3s_num = 1;
     var transmitter4s_num = 1;
+    var transmitter5s_num = 0;
     var guarder1s_num = 1;
     var guarder2s_num = 1;
     var guarder3s_num = 1;
+    var guarder4s_num = 1;
     var repairers_num = 0;
     var queen1s_num = 1;
     var queen2s_num = 0;
     var upgrader1s_num = 1;
     var upgrader2s_num = 1;
-    var builders_num = 2;
+    var builders_num = 1;
     var smallqueen1s_num = 1;
     var smallqueen2s_num = 1;
     var chargers_num = 1;
@@ -91,10 +93,12 @@ module.exports.loop = function () {
     var guarder1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'guarder' && creep.memory.s == 'W23S8');
     var guarder2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'guarder' && creep.memory.s == 'W23S9');
     var guarder3s = _.filter(Game.creeps, (creep) => creep.memory.role == 'guarder' && creep.memory.s == 'W23S7');
+    var guarder4s = _.filter(Game.creeps, (creep) => creep.memory.role == 'guarder' && creep.memory.s == 'W23S13');
     var transmitter1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transmitter' && creep.memory.s == 'W23S8');  
     var transmitter2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transmitter' && creep.memory.s == 'W23S9');
     var transmitter3s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transmitter' && creep.memory.s == 'W23S7');
     var transmitter4s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transmitter' && creep.memory.s == 'W23S13');
+    var transmitter5s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transmitter' && creep.memory.s == 'W22S12');
     var upgrader1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcabb19099fc012e63421f');
     var upgrader2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcaba59099fc012e6340a8');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
@@ -130,10 +134,12 @@ module.exports.loop = function () {
         console.log('guarder1s: ' + guarder1s.length);
         console.log('guarder2s: ' + guarder2s.length);
         console.log('guarder3s: ' + guarder3s.length);
+        console.log('guarder4s: ' + guarder4s.length);
         console.log('transmitter1s: ' + transmitter1s.length);
         console.log('transmitter2s: ' + transmitter2s.length);
         console.log('transmitter3s: ' + transmitter3s.length);
         console.log('transmitter4s: ' + transmitter4s.length);
+        console.log('transmitter5s: ' + transmitter5s.length);
         console.log('upgrader1s: ' + upgrader1s.length);
         console.log('upgrader2s: ' + upgrader2s.length);
         console.log('builders: ' + builders.length);
@@ -334,6 +340,13 @@ module.exports.loop = function () {
         Game.spawns['Hibari3'].spawnCreep([CLAIM,CLAIM,MOVE,MOVE], newName, 
             {memory: {role: 'transmitter', s: 'W23S13'}});        
     }
+
+    if(transmitter5s.length < transmitter5s_num) {
+        var newName = 'transmitter5_' + Game.time;
+        if(show_details) console.log('Spawning new transmitter5: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([CLAIM,CLAIM,MOVE,MOVE], newName, 
+            {memory: {role: 'transmitter', s: 'W22S12'}});        
+    }
     
     // #########################   guarders  #############################
 
@@ -356,6 +369,13 @@ module.exports.loop = function () {
         if(show_details) console.log('Spawning new guarder3: ' + newName);
         Game.spawns['Hibari2'].spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'guarder', s: 'W23S7'}});
+    }
+
+    if(guarder4s.length < guarder4s_num) {
+        var newName = 'guarder4_' + Game.time;
+        if(show_details) console.log('Spawning new guarder4: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'guarder', s: 'W23S13'}});
     }
 
     // #########################   others  #############################
@@ -527,8 +547,8 @@ module.exports.loop = function () {
             if(creep.dismantle(str) == ERR_NOT_IN_RANGE){creep.moveTo(str);}
             */
             
-            if(!creep.pos.inRangeTo(Game.flags.W23S13,24)) creep.moveTo(Game.flags.W23S13);
-            else {builder.run(creep, 'SOURCE');}
+            if(!creep.pos.inRangeTo(Game.flags.W23S12,24)) creep.moveTo(Game.flags.W23S12);
+            else {builder.run(creep, 'STORAGE');}
             
         }
         if(creep.memory.role == 'scout') {
