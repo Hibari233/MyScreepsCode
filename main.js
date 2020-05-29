@@ -25,9 +25,12 @@ module.exports.loop = function () {
     var drone5_num = 1;
     var drone6_num = 1;
     var drone7_num = 1;
+    var drone8_num = 1;
+    var drone9_num = 1;
     var drone12_num = 1;
     var drone13_num = 1;
     var mdrones1_num = 0;
+    var mdrones2_num = 1;
     var scouts1_num = 1;
     var scouts2_num = 1;
     var scouts3_num = 1;
@@ -35,23 +38,26 @@ module.exports.loop = function () {
     var scouts5_num = 1;
     var scouts6_num = 1;
     var scouts7_num = 1;
+    var scouts8_num = 1;
     var transporter1s_num = 1;
     var transporter2s_num = 3;
     var transporter3s_num = 2;
     var transporter4s_num = 1;
+    var transporter5s_num = 3;
+    var transporter6s_num = 3;
     var modern_transporters_num = 1;
     var transmitter1s_num = 1;
     var transmitter2s_num = 1;
     var transmitter3s_num = 1;
     var transmitter4s_num = 1;
-    var transmitter5s_num = 0;
+    var transmitter5s_num = 1;
     var guarder1s_num = 1;
     var guarder2s_num = 1;
     var guarder3s_num = 1;
     var guarder4s_num = 1;
     var repairers_num = 0;
     var queen1s_num = 1;
-    var queen2s_num = 0;
+    var queen2s_num = 1;
     var upgrader1s_num = 1;
     var upgrader2s_num = 1;
     var builders_num = 1;
@@ -75,9 +81,12 @@ module.exports.loop = function () {
     var drones5 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source5'); 
     var drones6 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source6');
     var drones7 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source7');
+    var drones8 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source8');
+    var drones9 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source9');
     var drones12 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source12');
     var drones13 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source13');
     var mdrones1 = _.filter(Game.creeps, (creep) => creep.memory.role == 'mdrone' && creep.memory.s == 'mineral1');
+    var mdrones2 = _.filter(Game.creeps, (creep) => creep.memory.role == 'mdrone' && creep.memory.s == 'mineral2');
     var scouts1 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W22S7');
     var scouts2 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S8');
     var scouts3 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S9'); 
@@ -85,10 +94,13 @@ module.exports.loop = function () {
     var scouts5 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W22S12');
     var scouts6 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W22S13');
     var scouts7 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W21S13'); 
+    var scouts8 = _.filter(Game.creeps, (creep) => creep.memory.role == 'scout' && creep.memory.s == 'W23S7'); 
     var transporter1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W22S8');
     var transporter2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S8');
     var transporter3s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S9');
     var transporter4s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S12');
+    var transporter5s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S13');
+    var transporter6s = _.filter(Game.creeps, (creep) => creep.memory.role == 'transporter' && creep.memory.s == 'W23S7');
     var modern_transporters = _.filter(Game.creeps, (creep) => creep.memory.role == 'modern_transporter');
     var guarder1s = _.filter(Game.creeps, (creep) => creep.memory.role == 'guarder' && creep.memory.s == 'W23S8');
     var guarder2s = _.filter(Game.creeps, (creep) => creep.memory.role == 'guarder' && creep.memory.s == 'W23S9');
@@ -120,9 +132,12 @@ module.exports.loop = function () {
         console.log('drones5: ' + drones5.length);
         console.log('drones6: ' + drones6.length);
         console.log('drones7: ' + drones7.length);
+        console.log('drones8: ' + drones8.length);
+        console.log('drones9: ' + drones9.length);
         console.log('drones12: ' + drones12.length);
         console.log('drones13: ' + drones13.length);
         console.log('mdrones1: ' + mdrones1.length);
+        console.log('mdrones2: ' + mdrones2.length);
         console.log('scouts1: ' + scouts1.length);
         console.log('scouts2: ' + scouts2.length);
         console.log('scouts3: ' + scouts3.length);
@@ -130,6 +145,8 @@ module.exports.loop = function () {
         console.log('transporter2s: ' + transporter2s.length);
         console.log('transporter3s: ' + transporter3s.length);
         console.log('transporter4s: ' + transporter4s.length);
+        console.log('transporter5s: ' + transporter5s.length);
+        console.log('transporter6s: ' + transporter6s.length);
         console.log('modern_transporters:' + modern_transporters.length);
         console.log('guarder1s: ' + guarder1s.length);
         console.log('guarder2s: ' + guarder2s.length);
@@ -203,17 +220,31 @@ module.exports.loop = function () {
             {memory: {role: 'drone', s: 'source7'}});        
     }
 
+    if(drones8.length < drone8_num) {
+        var newName = 'drone8_' + Game.time;
+        if(show_details) console.log('Spawning new drone8: ' + newName);
+        Game.spawns['Hibari'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'drone', s: 'source8'}});        
+    }
+
+    if(drones9.length < drone9_num) {
+        var newName = 'drone9_' + Game.time;
+        if(show_details) console.log('Spawning new drone9: ' + newName);
+        Game.spawns['Hibari'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'drone', s: 'source9'}});        
+    }
+
     if(drones12.length < drone12_num) {
         var newName = 'drone12_' + Game.time;
         if(show_details) console.log('Spawning new drone12: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE], newName, 
+        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'drone', s: 'source12'}});        
     }
 
     if(drones13.length < drone13_num) {
         var newName = 'drone13_' + Game.time;
         if(show_details) console.log('Spawning new drone13: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE], newName, 
+        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'drone', s: 'source13'}});        
     }
     // #########################   mdrones  #############################
@@ -223,6 +254,13 @@ module.exports.loop = function () {
         if(show_details) console.log('Spawning new mdrone1: ' + newName);
         Game.spawns['Hibari'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName,
             {memory: {role: 'mdrone', s: 'mineral1'}});
+    }
+    
+    if(mdrones2.length < mdrones2_num) {
+        var newName = 'mdrone2_' + Game.time;
+        if(show_details) console.log('Spawning new mdrone2: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName,
+            {memory: {role: 'mdrone', s: 'mineral2'}});
     }
 
     // #########################   scouts  #############################
@@ -256,24 +294,31 @@ module.exports.loop = function () {
     }
 
     if(scouts5.length < scouts5_num) {
-        var newName = 'scout4_' + Game.time;
-        if(show_details) console.log('Spawning new scout4: ' + newName);
+        var newName = 'scout5_' + Game.time;
+        if(show_details) console.log('Spawning new scout5: ' + newName);
         Game.spawns['Hibari3'].spawnCreep([MOVE], newName, 
             {memory: {role: 'scout', s: 'W22S12'}});
     }
 
     if(scouts6.length < scouts6_num) {
-        var newName = 'scout4_' + Game.time;
-        if(show_details) console.log('Spawning new scout4: ' + newName);
+        var newName = 'scout6_' + Game.time;
+        if(show_details) console.log('Spawning new scout6: ' + newName);
         Game.spawns['Hibari3'].spawnCreep([MOVE], newName, 
             {memory: {role: 'scout', s: 'W22S13'}});
     }
 
     if(scouts7.length < scouts7_num) {
-        var newName = 'scout4_' + Game.time;
-        if(show_details) console.log('Spawning new scout4: ' + newName);
+        var newName = 'scout7_' + Game.time;
+        if(show_details) console.log('Spawning new scout7: ' + newName);
         Game.spawns['Hibari3'].spawnCreep([MOVE], newName, 
             {memory: {role: 'scout', s: 'W21S13'}});
+    }
+
+    if(scouts8.length < scouts8_num) {
+        var newName = 'scout8_' + Game.time;
+        if(show_details) console.log('Spawning new scout8: ' + newName);
+        Game.spawns['Hibari2'].spawnCreep([MOVE], newName, 
+            {memory: {role: 'scout', s: 'W23S7'}});
     }
     // #########################   transporters  #############################
 
@@ -303,6 +348,20 @@ module.exports.loop = function () {
         if(show_details) console.log('Spawning new transporter4: ' + newName);
         Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'transporter', s: 'W23S12', des: '5ebc76fd6ae95c609c9c64cd'}});        
+    }
+
+    if(transporter5s.length < transporter5s_num) {
+        var newName = 'transporter5_' + Game.time;
+        if(show_details) console.log('Spawning new transporter5: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'transporter', s: 'W23S13', des: '5ebc76fd6ae95c609c9c64cd'}});        
+    }
+
+    if(transporter6s.length < transporter6s_num) {
+        var newName = 'transporter6_' + Game.time;
+        if(show_details) console.log('Spawning new transporter5: ' + newName);
+        Game.spawns['Hibari2'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'transporter', s: 'W23S7', des: '5e8ad848acf3f319ef9cb795'}});        
     }
     
     if(modern_transporters.length < modern_transporters_num) {
@@ -418,7 +477,7 @@ module.exports.loop = function () {
     if(builders.length < builders_num) {
         var newName = 'builder_' + Game.time;
         if(show_details) console.log('Spawning new builder: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
+        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
             {memory: {role: 'builder'}});
     }
     
@@ -573,7 +632,7 @@ module.exports.loop = function () {
             guarder.run(creep);
         }
         if(creep.memory.role == 'modern_transporter') {
-            modern_transporter.run(creep, '5ebc76fd6ae95c609c9c64cd', '5ecc85137e4d0c428bc08d55', RESOURCE_KEANIUM, false, false);
+            modern_transporter.run(creep, '5ebc76fd6ae95c609c9c64cd', '5ecc85137e4d0c428bc08d55', RESOURCE_CATALYST, false, false);
         }
         if(creep.memory.role == 'claimer') {
             //if(!creep.pos.inRangeTo(Game.flags.W23S12,20)) creep.moveTo(Game.flags.W23S12);

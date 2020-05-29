@@ -1,6 +1,8 @@
 var mdrone = {
     run: function(creep) {
-
+        
+        if(creep.ticksToLive < 200 && creep.store.getUsedCapacity() == 0) {creep.suicide();}
+        
         if(!creep.memory.mdrone && creep.store[RESOURCE_HYDROGEN] == 0) {
             creep.memory.mdrone = true;
         }
@@ -14,9 +16,13 @@ var mdrone = {
                         structure.store.getFreeCapacity() > 0;
                 }
             });
-            if(creep.transfer(ss, RESOURCE_HYDROGEN) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(ss);
-            }
+            for(var name of RESOURCES_ALL) {
+                    if(creep.store.getUsedCapacity(name) > 0) {
+                        if(creep.transfer(ss,name) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(ss, {visualizePathStyle: {stroke: '#f6b352', opacity: .5, reusePath: 50}});
+                        }
+                    }
+                }
         }
         else {
             var p = creep.memory.s;

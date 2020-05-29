@@ -10,23 +10,31 @@ var drone = {
         }
 	    if(!creep.memory.drone) {
 	        var po = creep.memory.s;
-	        var container = creep.room.lookForAt(LOOK_STRUCTURES, Game.flags[po]);
-	        if(container[0].hits < container[0].hitsMax){
-	            if(creep.repair(container[0]) == ERR_NOT_IN_RANGE) {
-	                creep.moveTo(container[0]);
-	            }
-	        }
-	        else{
-                var ss = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    filter: (structure) => {
-                        return structure.structureType == STRUCTURE_CONTAINER &&
-                                structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-                    }
-                });
-                if(creep.transfer(ss, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(ss);
+            var container = creep.room.lookForAt(LOOK_STRUCTURES, Game.flags[po]);
+            if(container[0] == undefined){
+                var str = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+                if(creep.build(str) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(str);
                 }
-	        }
+            }
+            else{
+                if(container[0].hits < container[0].hitsMax){
+                    if(creep.repair(container[0]) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(container[0]);
+                    }
+                }
+                else{
+                    var ss = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                        filter: (structure) => {
+                            return structure.structureType == STRUCTURE_CONTAINER &&
+                                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
+                        }
+                    });
+                    if(creep.transfer(ss, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(ss);
+                    }
+                }
+            }
         }
         else {
             var p = creep.memory.s;
