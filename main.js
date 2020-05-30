@@ -14,7 +14,9 @@ var check = require('stateScanner');
 var modern_transporter = require('modern_transporter');
 var claimer = require('claimer');
 var attacker = require('attacker');
+var manager = require('manager');
 require('optimize');
+const labCtrl = require('labCtrl')
 
 module.exports.loop = function () {
     const show_details = false;
@@ -29,7 +31,7 @@ module.exports.loop = function () {
     var drone9_num = 1;
     var drone12_num = 1;
     var drone13_num = 1;
-    var mdrones1_num = 0;
+    var mdrones1_num = 1;
     var mdrones2_num = 1;
     var scouts1_num = 1;
     var scouts2_num = 1;
@@ -44,7 +46,7 @@ module.exports.loop = function () {
     var transporter3s_num = 2;
     var transporter4s_num = 1;
     var transporter5s_num = 3;
-    var transporter6s_num = 3;
+    var transporter6s_num = 4;
     var modern_transporters_num = 1;
     var transmitter1s_num = 1;
     var transmitter2s_num = 1;
@@ -66,6 +68,9 @@ module.exports.loop = function () {
     var chargers_num = 1;
     var claimers_num = 0;
     var attackers_num = 0;
+    if(Game.rooms['W22S8'].storage.store.getUsedCapacity(RESOURCE_ENERGY) > 2000000){
+        Game.market.deal('5ec49dee6c38e20b1f9dfd42',100000,'W22S8');
+    }
     
     for(const name in Memory.creeps) {
         if(!Game.creeps[name]) {
@@ -353,21 +358,21 @@ module.exports.loop = function () {
     if(transporter5s.length < transporter5s_num) {
         var newName = 'transporter5_' + Game.time;
         if(show_details) console.log('Spawning new transporter5: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'transporter', s: 'W23S13', des: '5ebc76fd6ae95c609c9c64cd'}});        
     }
 
     if(transporter6s.length < transporter6s_num) {
         var newName = 'transporter6_' + Game.time;
         if(show_details) console.log('Spawning new transporter5: ' + newName);
-        Game.spawns['Hibari2'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Hibari'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'transporter', s: 'W23S7', des: '5e8ad848acf3f319ef9cb795'}});        
     }
     
     if(modern_transporters.length < modern_transporters_num) {
         var newName = 'modern_transporter_' + Game.time;
         if(show_details) console.log('Spawning new modern_transporter: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Hibari2'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'modern_transporter'}});
     }
     // #########################   transmitters  #############################
@@ -561,7 +566,7 @@ module.exports.loop = function () {
     var linkbase_W23S12 = Game.getObjectById('5ebdf6d91ba74871135b4bc0');
     var linkto_W23S12 = Game.getObjectById('5ebe186c26b7673a4ae868f9');
     if(linkto_W23S12.store.energy == 0) {linkbase_W23S12.transferEnergy(linkto_W23S12);}
-    
+    /*
     var base1 = Game.getObjectById('5eb5cb0d505937045f020767');
     var base2 = Game.getObjectById('5eb553d2a7d7c84181f3c070');
     var lab1 = Game.getObjectById('5eb58e85405c8ea6a54d653e');
@@ -573,7 +578,8 @@ module.exports.loop = function () {
     lab2.runReaction(base1, base2);
     lab3.runReaction(base1, base2);
 	lab4.runReaction(base1, base2);
-    
+    */
+    labCtrl.run('W22S8', RESOURCE_KEANIUM_OXIDE, 2000);
     var factory = Game.getObjectById('5ec5738af4c123eab693ac43');
     factory.produce(RESOURCE_BATTERY);
     /*
@@ -632,7 +638,7 @@ module.exports.loop = function () {
             guarder.run(creep);
         }
         if(creep.memory.role == 'modern_transporter') {
-            modern_transporter.run(creep, '5ebc76fd6ae95c609c9c64cd', '5ecc85137e4d0c428bc08d55', RESOURCE_CATALYST, false, false);
+            modern_transporter.run(creep, '5e8ad848acf3f319ef9cb795', '5eccf73763e57e8d958fce0d', RESOURCE_ENERGY, false, false);
         }
         if(creep.memory.role == 'claimer') {
             //if(!creep.pos.inRangeTo(Game.flags.W23S12,20)) creep.moveTo(Game.flags.W23S12);

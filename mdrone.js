@@ -19,7 +19,7 @@ var mdrone = {
             for(var name of RESOURCES_ALL) {
                     if(creep.store.getUsedCapacity(name) > 0) {
                         if(creep.transfer(ss,name) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(ss, {visualizePathStyle: {stroke: '#f6b352', opacity: .5, reusePath: 50}});
+                            creep.moveTo(ss, {visualizePathStyle: {stroke: '#ffffff', opacity: .1, reusePath: 50}});
                         }
                     }
                 }

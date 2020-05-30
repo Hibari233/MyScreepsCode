@@ -1,6 +1,6 @@
 var transporter = {
     run: function(creep) {
-        if(creep.ticksToLive < 200 && creep.store.energy == 0) {creep.suicide();}
+        if(creep.ticksToLive < 100 && creep.store.energy == 0) {creep.suicide();}
         if(creep.memory.transport && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.transport = false;
 	    }
