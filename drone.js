@@ -24,14 +24,8 @@ var drone = {
                     }
                 }
                 else{
-                    var ss = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                        filter: (structure) => {
-                            return structure.structureType == STRUCTURE_CONTAINER &&
-                                    structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-                        }
-                    });
-                    if(creep.transfer(ss, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(ss);
+                    if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(container);
                     }
                 }
             }

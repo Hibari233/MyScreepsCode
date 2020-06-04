@@ -11,7 +11,8 @@ var charger = {
             const str = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: object => {
                     return (object.structureType == STRUCTURE_TOWER ||
-                            object.structureType == STRUCTURE_LAB ) &&
+                            object.structureType == STRUCTURE_LAB  ||
+                            object.structureType == STRUCTURE_LINK && object.id != '5e8d48bbe1ebfe7eb1a00221') &&
                             object.store.getFreeCapacity(RESOURCE_ENERGY) > 50;
                 }
             });

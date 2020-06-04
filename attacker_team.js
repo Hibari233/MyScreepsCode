@@ -14,8 +14,8 @@ var attacker_team = {
             healer.moveTo(attacker, {visualizePathStyle: {stroke: '#f6b352', opacity: .5}});
         }
         if(type == 'ATTACK') {
-            var str = creep.room.lookForAt(LOOK_STRUCTURES, Game.flags[target]);
-            if(creep.dismantle(str[0]) == ERR_NOT_IN_RANGE) {
+            var str = attacker.room.lookForAt(LOOK_STRUCTURES, Game.flags[target]);
+            if(attacker.dismantle(str[0]) == ERR_NOT_IN_RANGE) {
                 if(healer.pos.inRangeTo(attacker, 1) == true && healer.fatigue == 0) {
                     attacker.moveTo(Game.flags[target], {visualizePathStyle: {stroke: '#f6b352', opacity: .5}});
                 }
