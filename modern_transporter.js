@@ -1,6 +1,6 @@
 var modern_transporter = {
     run: function(creep, _idget, _idput, _type, _forcemove, _back) {
-        if(creep.ticksToLive < 200 && creep.store.getUsedCapacity() == 0) {creep.suicide();}
+        if(creep.ticksToLive < 250 && creep.store.getUsedCapacity() == 0) {creep.suicide();}
 
         if(creep.memory.transport && creep.store.getUsedCapacity() == 0) {
             creep.memory.transport = false;
@@ -9,7 +9,16 @@ var modern_transporter = {
 	        creep.memory.transport = true;
         }
         var source = Game.getObjectById(_idget);
-        if(_forcemove == true || source.store.getUsedCapacity(_type) == 0) creep.memory.transport = true;
+        if(source == undefined) {
+            creep.say("No Visual");
+            return;
+        }
+        if(_type != 'ALL'){
+            if(_forcemove == true || source.store.getUsedCapacity(_type) == 0) creep.memory.transport = true;
+        }
+        else{
+            if(_forcemove == true || source.store.getUsedCapacity() == 0) creep.memory.transport = true;
+        }
         if(creep.memory.transport || _back == true) {
             var str = Game.getObjectById(_idput);
             if(_type == 'ALL') {

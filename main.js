@@ -14,9 +14,11 @@ var check = require('stateScanner');
 var modern_transporter = require('modern_transporter');
 var claimer = require('claimer');
 var attacker = require('attacker');
+var attacker_drone = require('attacker_drone');
 var manager = require('manager');
+var attacker_team = require('attacker_team');
 require('optimize');
-const labCtrl = require('labCtrl')
+const labCtrl = require('labCtrl');
 
 module.exports.loop = function () {
     const show_details = false;
@@ -32,7 +34,7 @@ module.exports.loop = function () {
     var drone12_num = 1;
     var drone13_num = 1;
     var mdrones1_num = 1;
-    var mdrones2_num = 1;
+    var mdrones2_num = 0;
     var scouts1_num = 1;
     var scouts2_num = 1;
     var scouts3_num = 1;
@@ -46,13 +48,13 @@ module.exports.loop = function () {
     var transporter3s_num = 2;
     var transporter4s_num = 1;
     var transporter5s_num = 3;
-    var transporter6s_num = 4;
-    var modern_transporters_num = 1;
+    var transporter6s_num = 3;
+    var modern_transporters_num = 0;
     var transmitter1s_num = 1;
     var transmitter2s_num = 1;
     var transmitter3s_num = 1;
     var transmitter4s_num = 1;
-    var transmitter5s_num = 1;
+    var transmitter5s_num = 0;
     var guarder1s_num = 1;
     var guarder2s_num = 1;
     var guarder3s_num = 1;
@@ -62,21 +64,24 @@ module.exports.loop = function () {
     var queen2s_num = 1;
     var upgrader1s_num = 1;
     var upgrader2s_num = 1;
-    var builders_num = 1;
+    var builders_num = 0;
     var smallqueen1s_num = 1;
     var smallqueen2s_num = 1;
     var chargers_num = 1;
     var claimers_num = 0;
     var attackers_num = 0;
-    if(Game.rooms['W22S8'].storage.store.getUsedCapacity(RESOURCE_ENERGY) > 2000000){
-        Game.market.deal('5ec49dee6c38e20b1f9dfd42',100000,'W22S8');
-    }
-    
+    var attacker_drones_num = 0;
+    var attacker_team_attacker_num = 0;
+    var attacker_team_healer_num = 0;
+    var managers_W22S8_num = 1;
+    var managers_W23S12_num = 1;
+
     for(const name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name]
         }
     }
+    
 
     // #########################   drones  #############################
     var drones1 = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' && creep.memory.s == 'source1');
@@ -127,6 +132,11 @@ module.exports.loop = function () {
     var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
     var claimers = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer');
     var attackers = _.filter(Game.creeps, (creep) => creep.memory.role == 'attacker');
+    var attacker_drones = _.filter(Game.creeps, (creep) => creep.memory.role == 'attacker_drone');
+    var managers_W22S8 = _.filter(Game.creeps, (creep) => creep.memory.role == 'manager' && creep.memory.room == 'W22S8');
+    var managers_W23S12 = _.filter(Game.creeps, (creep) => creep.memory.role == 'manager' && creep.memory.room == 'W23S12');
+    var attacker_team_attackers = _.filter(Game.creeps, (creep) => creep.memory.role == 'attacker_team_attacker');
+    var attacker_team_healers = _.filter(Game.creeps, (creep) => creep.memory.role == 'attacker_team_healer');
 
     // #########################   panel  #############################
     if(show_details) {
@@ -173,9 +183,42 @@ module.exports.loop = function () {
         console.log('repairers: ' + repairers.length);
         console.log('claimers: ' + claimers.length);
         console.log('attackers: ' + attackers.length);
+        console.log('attacker_drones: ' + attacker_drones.length);
+        console.log('managers_W22S8: ' + managers_W22S8.length);
+        console.log('managers_W23S12: ' + managers_W23S12.length);
     }
     // #########################   num_control  #############################
+    // #########################   attacker  #############################
+
+    if(attackers.length < attackers_num) {
+        var newName = 'attacker_' + Game.time;
+        if(show_details) console.log('Spawning new attacker: ' + newName);
+        Game.spawns['Hibari2'].spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL], newName, 
+            {memory: {role: 'attacker'}});
+    }
+
+    if(attacker_drones.length < attacker_drones_num) {
+        var newName = 'attacker_drone_' + Game.time;
+        if(show_details) console.log('Spawning new attacker_drone: ' + newName);
+        Game.spawns['Hibari2'].spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'attacker_drone'}});
+    }
+
+    if(attacker_team_attackers.length < attacker_team_attacker_num) {
+        var newName = 'attacker_team_attacker_' + Game.time;
+        if(show_details) console.log('Spawning new attacker_team_attacker: ' + newName);
+        Game.spawns['Hibari2'].spawnCreep([MOVE], newName, 
+            {memory: {role: 'attacker_team_attacker'}});
+    }
+
+    if(attacker_team_healers.length < attacker_team_healer_num) {
+        var newName = 'attacker_team_healer_' + Game.time;
+        if(show_details) console.log('Spawning new attacker_team_healer: ' + newName);
+        Game.spawns['Hibari2'].spawnCreep([MOVE], newName, 
+            {memory: {role: 'attacker_team_healer'}});
+    }
     // #########################   drones  #############################
+    
     if(drones1.length < drone1_num) {
         var newName = 'drone1_' + Game.time;
         if(show_details) console.log('Spawning new drone1: ' + newName);
@@ -264,7 +307,7 @@ module.exports.loop = function () {
     if(mdrones2.length < mdrones2_num) {
         var newName = 'mdrone2_' + Game.time;
         if(show_details) console.log('Spawning new mdrone2: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName,
+        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName,
             {memory: {role: 'mdrone', s: 'mineral2'}});
     }
 
@@ -372,7 +415,7 @@ module.exports.loop = function () {
     if(modern_transporters.length < modern_transporters_num) {
         var newName = 'modern_transporter_' + Game.time;
         if(show_details) console.log('Spawning new modern_transporter: ' + newName);
-        Game.spawns['Hibari2'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'modern_transporter'}});
     }
     // #########################   transmitters  #############################
@@ -454,7 +497,7 @@ module.exports.loop = function () {
     if(queen1s.length < queen1s_num) {
         var newName = 'queen1_' + Game.time;
         if(show_details) console.log('Spawning new queen1: ' + newName);
-        Game.spawns['Hibari'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Hibari'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'queen', source: '5e8ad848acf3f319ef9cb795'}});
     }
 
@@ -468,7 +511,7 @@ module.exports.loop = function () {
     if(upgrader1s.length < upgrader1s_num) {
         var newName = 'upgrader1_' + Game.time;
         if(show_details) console.log('Spawning new upgrader1: ' + newName);
-        Game.spawns['Hibari'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE], newName, 
+        Game.spawns['Hibari'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'upgrader',source: '5e8d48bbe1ebfe7eb1a00221',controller: '5bbcabb19099fc012e63421f'}});
     }
 
@@ -482,7 +525,7 @@ module.exports.loop = function () {
     if(builders.length < builders_num) {
         var newName = 'builder_' + Game.time;
         if(show_details) console.log('Spawning new builder: ' + newName);
-        Game.spawns['Hibari3'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
+        Game.spawns['Hibari'].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
             {memory: {role: 'builder'}});
     }
     
@@ -507,13 +550,6 @@ module.exports.loop = function () {
             {memory: {role: 'charger'}});
     }
 
-    if(attackers.length < attackers_num) {
-        var newName = 'attacker_' + Game.time;
-        if(show_details) console.log('Spawning new attacker: ' + newName);
-        Game.spawns['Hibari'].spawnCreep([RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL], newName, 
-            {memory: {role: 'attacker'}});
-    }
-
     if(claimers.length < claimers_num) {
         var newName = 'claimer_' + Game.time;
         if(show_details) console.log('Spawning new claimer: ' + newName);
@@ -521,6 +557,20 @@ module.exports.loop = function () {
             {memory: {role: 'claimer'}});
     }
 
+    if(managers_W22S8.length < managers_W22S8_num) {
+        var newName = 'manager_W22S8_' + Game.time;
+        if(show_details) console.log('Spawning new manager_W22S8: ' + newName);
+        Game.spawns['Hibari2'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'manager' ,room: 'W22S8'}});
+    }
+
+    if(managers_W23S12.length < managers_W23S12_num) {
+        var newName = 'manager_W23S12_' + Game.time;
+        if(show_details) console.log('Spawning new manager_W23S12: ' + newName);
+        Game.spawns['Hibari3'].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+            {memory: {role: 'manager' ,room: 'W23S12'}});
+    }
+    
     if(Game.spawns['Hibari'].spawning) { 
         var spawningCreep = Game.creeps[Game.spawns['Hibari'].spawning.name];
         Game.spawns['Hibari'].room.visual.text(
@@ -572,16 +622,18 @@ module.exports.loop = function () {
     var lab1 = Game.getObjectById('5eb58e85405c8ea6a54d653e');
     var lab2 = Game.getObjectById('5eb624ba7998fe0ddf55a410');
     var lab3 = Game.getObjectById('5eb6405b0ca530a8e52d5113');
-    var lab4 = Game.getObjectById('5eb657c9663063dca91992fe')
-	
-	lab1.runReaction(base1, base2);
-    lab2.runReaction(base1, base2);
-    lab3.runReaction(base1, base2);
-	lab4.runReaction(base1, base2);
+    var lab4 = Game.getObjectById('5eb657c9663063dca91992fe');
     */
-    labCtrl.run('W22S8', RESOURCE_KEANIUM_OXIDE, 2000);
+    labCtrl.run('W22S8', RESOURCE_KEANIUM_OXIDE, 10000);
+    labCtrl.run('W23S12', RESOURCE_KEANIUM_OXIDE, 10000);
+
+
+
     var factory = Game.getObjectById('5ec5738af4c123eab693ac43');
     factory.produce(RESOURCE_BATTERY);
+    
+    
+    
     /*
     const amountToSell = 2000, maxTransferEnergyCost = 2000;
     const orders = Game.market.getAllOrders({type: ORDER_BUY, resourceType: RESOURCE_ENERGY});
@@ -611,10 +663,11 @@ module.exports.loop = function () {
             var str = Game.getObjectById('5c72ff5f9e26a340e62f7095');
             if(creep.dismantle(str) == ERR_NOT_IN_RANGE){creep.moveTo(str);}
             */
-            
-            if(!creep.pos.inRangeTo(Game.flags.W23S12,24)) creep.moveTo(Game.flags.W23S12);
+           /*
+            if(!creep.pos.inRangeTo(Game.flags.W22S8,24)) creep.moveTo(Game.flags.W22S8);
             else {builder.run(creep, 'STORAGE');}
-            
+            */
+           //manager.run(creep, '5eccf73763e57e8d958fce0d', '5eb657c9663063dca91992fe', RESOURCE_CATALYZED_KEANIUM_ALKALIDE, false, false);
         }
         if(creep.memory.role == 'scout') {
             scout.run(creep);
@@ -638,15 +691,42 @@ module.exports.loop = function () {
             guarder.run(creep);
         }
         if(creep.memory.role == 'modern_transporter') {
-            modern_transporter.run(creep, '5e8ad848acf3f319ef9cb795', '5eccf73763e57e8d958fce0d', RESOURCE_ENERGY, false, false);
+            modern_transporter.run(creep, '5c2a9b76c219895c92e5a4be', '5ecc85137e4d0c428bc08d55', 'ALL', false, false);
         }
         if(creep.memory.role == 'claimer') {
             //if(!creep.pos.inRangeTo(Game.flags.W23S12,20)) creep.moveTo(Game.flags.W23S12);
             claimer.run(creep);
         }
         if(creep.memory.role == 'attacker') {
+            
+            base2.boostCreep(creep);
+            lab2.boostCreep(creep);
+            base1.boostCreep(creep);
+            lab4.boostCreep(creep);
+            
             attacker.run(creep, 'pos', 'MOVE');
         }
+        if(creep.memory.role == 'attacker_drone') {
+            /*
+            base1.boostCreep(creep);
+            lab2.boostCreep(creep);
+            lab3.boostCreep(creep);
+            */
+            attacker_drone.run(creep, 'pos2', 'ATTACK');
+        }
+        if(creep.memory.role == 'manager' && creep.memory.room == 'W22S8'){
+            manager.run(creep, '5eccf73763e57e8d958fce0d', '5eb657c9663063dca91992fe', RESOURCE_CATALYZED_KEANIUM_ALKALIDE, false, false);
+        }
+        if(creep.memory.role == 'manager' && creep.memory.room == 'W23S12'){
+            //manager.run(creep, '5ebc76fd6ae95c609c9c64cd', '5ecc85137e4d0c428bc08d55', RESOURCE_CATALYZED_ZYNTHIUM_ACID, false, false);
+        }
+        if(creep.memory.role == 'attacker_team_attacker') {
+            var attacker_creep = creep;
+        }
+        if(creep.memory.role == 'attacker_team_healer') {
+            var attacker_creep2 = creep;
+        }
     }
+    attacker_team.run(attacker_creep, attacker_creep2, 'pos3', 'MOVE');
     check.stateScanner();
 }
