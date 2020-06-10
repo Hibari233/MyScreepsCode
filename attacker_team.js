@@ -1,10 +1,9 @@
 var attacker_team = {
     run: function(attacker, healer, target, type) {
+        var healer_tough = healer.getActiveBodyparts(TOUGH);
+        if(healer_tough <= 5) healer.heal(healer);
+        else healer.heal(attacker);
         if(type == 'MOVE') {
-            /*
-            if(healer.hits < healer.hitsMax) healer.heal(healer);
-            else healer.heal(attacker);
-            */
             if(healer.pos.getRangeTo(attacker) == Infinity){
                 attacker.moveTo(Game.flags[target], {visualizePathStyle: {stroke: '#f6b352', opacity: .5}});
             }

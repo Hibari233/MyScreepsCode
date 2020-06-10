@@ -24,8 +24,8 @@ var drone = {
                     }
                 }
                 else{
-                    if(creep.transfer(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(container);
+                    if(creep.transfer(container[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(container[0]);
                     }
                 }
             }
