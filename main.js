@@ -21,6 +21,7 @@ require('optimize');
 const labCtrl = require('labCtrl');
 
 module.exports.loop = function () {
+    if(Game.shard.name === 'shard2') return;
     const show_details = false;
     var drone1_num = 1;
     var drone2_num = 1;
@@ -59,10 +60,10 @@ module.exports.loop = function () {
     var guarder2s_num = 1;
     var guarder3s_num = 1;
     var guarder4s_num = 1;
-    var repairers_num = 0;
+    var repairers_num = 1;
     var queen1s_num = 1;
     var queen2s_num = 1;
-    var upgrader1s_num = 4;
+    var upgrader1s_num = 1;
     var upgrader2s_num = 1;
     var builders_num = 0;
     var smallqueen1s_num = 1;
@@ -230,14 +231,14 @@ module.exports.loop = function () {
     if(attacker_team_attackers.length < attacker_team_attacker_num && spawn_W22S8 != null) {
         var newName = 'attacker_team_attacker_' + Game.time;
         if(show_details) console.log('Spawning new attacker_team_attacker: ' + newName);
-        spawn_W22S8.spawnCreep([WORK,WORK,MOVE,MOVE,WORK,WORK,MOVE,MOVE,WORK,WORK,MOVE,MOVE], newName, 
+        spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'attacker_team_attacker'}});
     }
 
     if(attacker_team_healers.length < attacker_team_healer_num && spawn_W22S8 != null) {
         var newName = 'attacker_team_healer_' + Game.time;
         if(show_details) console.log('Spawning new attacker_team_healer: ' + newName);
-        spawn_W22S8.spawnCreep([HEAL,HEAL,MOVE,MOVE,HEAL,HEAL,MOVE,MOVE,HEAL,HEAL,MOVE,MOVE], newName, 
+        spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'attacker_team_healer'}});
     }
     // #########################   drones  #############################
@@ -435,10 +436,10 @@ module.exports.loop = function () {
             {memory: {role: 'transporter', s: 'W23S7', des: '5e8ad848acf3f319ef9cb795'}});        
     }
     
-    if(modern_transporters.length < modern_transporters_num && spawn_W23S12 != null) {
+    if(modern_transporters.length < modern_transporters_num && spawn_W22S8 != null) {
         var newName = 'modern_transporter_' + Game.time;
         if(show_details) console.log('Spawning new modern_transporter: ' + newName);
-        spawn_W23S12.spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        spawn_W22S8.spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'modern_transporter'}});
     }
     // #########################   transmitters  #############################
@@ -513,7 +514,7 @@ module.exports.loop = function () {
     if(repairers.length < repairers_num && spawn_W22S8 != null) {
         var newName = 'repairer_' + Game.time;
         if(show_details) console.log('Spawning new repairer: ' + newName);
-        spawn_W22S8.spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        spawn_W22S8.spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'repairer'}});        
     }
 
@@ -534,7 +535,7 @@ module.exports.loop = function () {
     if(upgrader1s.length < upgrader1s_num && spawn_W22S8 != null) {
         var newName = 'upgrader1_' + Game.time;
         if(show_details) console.log('Spawning new upgrader1: ' + newName);
-        spawn_W22S8.spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        spawn_W22S8.spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'upgrader',source: '5e8d48bbe1ebfe7eb1a00221',controller: '5bbcabb19099fc012e63421f'}});
     }
 
@@ -548,7 +549,7 @@ module.exports.loop = function () {
     if(builders.length < builders_num && spawn_W22S8 != null) {
         var newName = 'builder_' + Game.time;
         if(show_details) console.log('Spawning new builder: ' + newName);
-        spawn_W22S8.spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
+        spawn_W22S8.spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName,
             {memory: {role: 'builder'}});
     }
     
@@ -620,6 +621,15 @@ module.exports.loop = function () {
             Game.spawns['Hibari3'].pos.y + 1, 
             {align: 'left', opacity: 0.8});
     }
+
+    if(Game.spawns['Hibari4'].spawning) { 
+        var spawningCreep = Game.creeps[Game.spawns['Hibari4'].spawning.name];
+        Game.spawns['Hibari4'].room.visual.text(
+            '🛠️' + spawningCreep.memory.role,
+            Game.spawns['Hibari4'].pos.x - 1, 
+            Game.spawns['Hibari4'].pos.y + 1, 
+            {align: 'left', opacity: 0.8});
+    }
     
     var towers_W22S8 = Game.rooms.W22S8.find(FIND_STRUCTURES, {
         filter: (structure) => {
@@ -633,10 +643,13 @@ module.exports.loop = function () {
             }
     });
     
-    var towers = towers_W22S8.concat(towers_W23S12);
-    for(var i = 0 ; i < towers.length ; i ++ ) {
-        tower.run(towers[i]);
-	}
+    for (var i = 0; i < towers_W22S8.length; i ++) {
+        tower.run(towers_W22S8[i], 1000, 1000);
+    }
+
+    for (var i = 0; i < towers_W23S12.length; i ++) {
+        tower.run(towers_W23S12[i], 100000, 100000);
+    }
 	
     var linkbase_W22S8_1 = Game.getObjectById('5edf11ab5c8fed76f30aedad');
     var linkbase_W22S8_2 = Game.getObjectById('5e8d2e96af620e6f08ccd3f7');
@@ -659,14 +672,17 @@ module.exports.loop = function () {
     var lab3 = Game.getObjectById('5eb6405b0ca530a8e52d5113');
     var lab4 = Game.getObjectById('5eb657c9663063dca91992fe');
     
-    labCtrl.run('W22S8', RESOURCE_KEANIUM_OXIDE, 10000);
-    labCtrl.run('W23S12', RESOURCE_CATALYZED_KEANIUM_ALKALIDE, 14000);
+    //labCtrl.run('W22S8', RESOURCE_HYDROXIDE, 20000);
+    labCtrl.run('W23S12', RESOURCE_HYDROXIDE, 40000);
 
-
+    var ob = Game.getObjectById('5ee152ce4b48f14c2e22c1ab');
+    ob.observeRoom('W21S8');
 
     var factory = Game.getObjectById('5ec5738af4c123eab693ac43');
     factory.produce(RESOURCE_ENERGY);
     
+    var powerspawn_W22S8 = Game.getObjectById('5ee12e48887b713a5aadb7f2');
+    powerspawn_W22S8.processPower();
     
     
     /*
@@ -702,13 +718,14 @@ module.exports.loop = function () {
             if(!creep.pos.inRangeTo(Game.flags.W22S8,24)) creep.moveTo(Game.flags.W22S8);
             else {builder.run(creep, 'STORAGE');}
             
+            
            //manager.run(creep, '5eccf73763e57e8d958fce0d', '5eb657c9663063dca91992fe', RESOURCE_CATALYZED_KEANIUM_ALKALIDE, false, false);
         }
         if(creep.memory.role == 'scout') {
             scout.run(creep);
         }
         if(creep.memory.role == 'repairer') {
-            builder.run(creep);
+            repairer.run(creep);
         }
         if(creep.memory.role == 'transporter') {
             transporter.run(creep);
@@ -726,7 +743,7 @@ module.exports.loop = function () {
             guarder.run(creep);
         }
         if(creep.memory.role == 'modern_transporter') {
-            modern_transporter.run(creep, '5c2a9b76c219895c92e5a4be', '5ecc85137e4d0c428bc08d55', 'ALL', false, false);
+            modern_transporter.run(creep, '5cd385c089f34a3b76473899', '5e8ad848acf3f319ef9cb795', 'ALL', false, false);
         }
         if(creep.memory.role == 'claimer') {
             //if(!creep.pos.inRangeTo(Game.flags.W23S12,20)) creep.moveTo(Game.flags.W23S12);
@@ -750,20 +767,33 @@ module.exports.loop = function () {
             attacker_drone.run(creep, 'pos2', 'ATTACK');
         }
         if(creep.memory.role == 'manager' && creep.memory.room == 'W22S8'){
-            manager.run(creep, '5ec5738af4c123eab693ac43', '5e8ad848acf3f319ef9cb795', RESOURCE_ENERGY, false, false);
+            var lab = getNotEmptyLab(creep);
+            manager.run(creep, lab.id, '5e8ad848acf3f319ef9cb795', 'ALL', false, false, true);
         }
         if(creep.memory.role == 'manager' && creep.memory.room == 'W23S12'){
-            manager.run(creep, '5ecc85137e4d0c428bc08d55', '5ebc76fd6ae95c609c9c64cd', RESOURCE_ENERGY, false, false);
+            //manager.run(creep, '5ecfd262b13b761e358a3b71', '5ecc85137e4d0c428bc08d55', 'ALL', false, false);
         }
         if(creep.memory.role == 'attacker_team_attacker') {
             var attacker_creep = creep;
+            base1.boostCreep(creep);
+            base2.boostCreep(creep);
+            lab1.boostCreep(creep);
+            lab2.boostCreep(creep);
+            lab3.boostCreep(creep);
+            lab4.boostCreep(creep);
         }
         if(creep.memory.role == 'attacker_team_healer') {
             var attacker_creep2 = creep;
+            base1.boostCreep(creep);
+            base2.boostCreep(creep);
+            lab1.boostCreep(creep);
+            lab2.boostCreep(creep);
+            lab3.boostCreep(creep);
+            lab4.boostCreep(creep);
         }
     }
     if(attacker_creep != undefined && attacker_creep2 != undefined)
-        attacker_team.run(attacker_creep, attacker_creep2, 'pos3', 'ATTACK');
+        attacker_team.run(attacker_creep, attacker_creep2, 'pos3', 'MOVE');
     check.stateScanner();
 }
 
@@ -775,4 +805,14 @@ function getAvaliableSpawn(room) {
         }
     }
     return null;
+}
+
+function getNotEmptyLab(creep) {
+    var lab = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType == STRUCTURE_LAB &&
+                    structure.mineralType != undefined);
+        }
+    });
+    return lab;
 }

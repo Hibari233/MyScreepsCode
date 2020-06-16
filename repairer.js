@@ -10,11 +10,14 @@ var repairer = {
 	    if(creep.memory.repairing) {
             var str = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_RAMPART && structure.hits < 1000000) ||
-                            (structure.structureType == STRUCTURE_WALL && structure.hits < 1000000 );
+                    return (structure.structureType == STRUCTURE_RAMPART && structure.hits < 2000000) ||
+                            (structure.structureType == STRUCTURE_WALL && structure.hits < 2000000 );
                 }
             });
-            //targets.sort((a,b) => a.hits - b.hits);
+            /*
+            if(Game.time % 200 == 0)
+                str.sort((a,b) => a.hits - b.hits);
+            */
             //creep.say(str);
             if(str) {
                 if(creep.repair(str) == ERR_NOT_IN_RANGE) {

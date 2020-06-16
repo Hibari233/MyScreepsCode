@@ -1,6 +1,6 @@
 var builder = {
     run: function(creep, mode) {
-
+        if(creep.ticksToLive < 200) creep_renew(creep);
         if(creep.memory.builder && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.builder = false;
 	    }
@@ -58,5 +58,14 @@ var builder = {
         }
 	}
 };
-
+function creep_renew(creep) {
+    const spawn = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+        filter: structure => {
+            return structure.structureType == STRUCTURE_SPAWN && structure.spawning == null;
+        }
+    });
+    if(spawn) {
+        if(spawn.renewCreep(creep) == ERR_NOT_IN_RANGE) creep.moveTo(spawn);
+    }
+}
 module.exports = builder;

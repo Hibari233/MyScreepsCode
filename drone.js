@@ -12,6 +12,7 @@ var drone = {
 	        var po = creep.memory.s;
             var container = creep.room.lookForAt(LOOK_STRUCTURES, Game.flags[po]);
             if(container[0] == undefined){
+                creep.room.createConstructionSite(Game.flags[po], STRUCTURE_CONTAINER);
                 var str = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
                 if(creep.build(str) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(str);

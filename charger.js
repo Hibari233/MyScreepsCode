@@ -1,6 +1,6 @@
 var charger = {
     run: function(creep) {
-
+        if(creep.ticksToLive < 200) creep_renew(creep);
         if(creep.memory.charge && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.charge = false;
 	    }
@@ -44,4 +44,14 @@ var charger = {
 	}
 };
 
+function creep_renew(creep) {
+    const spawn = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+        filter: structure => {
+            return structure.structureType == STRUCTURE_SPAWN && structure.spawning == null;
+        }
+    });
+    if(spawn) {
+        if(spawn.renewCreep(creep) == ERR_NOT_IN_RANGE) creep.moveTo(spawn);
+    }
+}
 module.exports = charger;

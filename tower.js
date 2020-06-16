@@ -1,12 +1,12 @@
 var tower = {
-    run: function(tower) {
+    run: function(tower, ramhp, wallhp) {
         var structures = tower.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
                 return (structure.structureType == STRUCTURE_EXTENSION ||
                         structure.structureType == STRUCTURE_CONTAINER ||
                         structure.structureType == STRUCTURE_ROAD ||
-                        structure.structureType == STRUCTURE_WALL && structure.hits < 100000 ||
-                        structure.structureType == STRUCTURE_RAMPART && structure.hits < 100000) &&
+                        structure.structureType == STRUCTURE_WALL && structure.hits < wallhp ||
+                        structure.structureType == STRUCTURE_RAMPART && structure.hits < ramhp) &&
                         structure.hits < structure.hitsMax;
                 }
         });

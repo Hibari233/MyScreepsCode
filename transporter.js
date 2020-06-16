@@ -7,6 +7,7 @@ var transporter = {
 	    if(!creep.memory.transport && creep.store.getFreeCapacity() == 0) {
 	        creep.memory.transport = true;
         }
+        if(creep.ticksToLive < 150) creep.memory.transport == true;
 	    if(creep.memory.transport) {
             var des = Game.getObjectById(creep.memory.des);
             if(creep.transfer(des, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
