@@ -8,7 +8,12 @@ var manager = {
 	        creep.memory.manage = true;
         }
         var source = Game.getObjectById(_idget);
-        if(_forcemove == true || source.store.getUsedCapacity(_type) == 0) creep.memory.manage = true;
+        if(_type != 'ALL'){
+            if(_forcemove == true || source.store.getUsedCapacity(_type) == 0) creep.memory.manage = true;
+        }
+        else{
+            if(_forcemove == true || source.store.getUsedCapacity() == 0) creep.memory.manage = true;
+        }
         if(creep.memory.manage || _back == true) {
             //creep.say('put');
             var str = Game.getObjectById(_idput);
