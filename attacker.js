@@ -14,7 +14,8 @@ var attacker = {
         }
         if(_type == 'AUTO') {
             var hostile = creep.pos.findClosestByPath(FIND_HOSTILE_CREEPS);
-            if(creep.rangedAttack(hostile) == ERR_NOT_IN_RANGE) creep.moveTo(hostile, {visualizePathStyle: {stroke: '#f6b352', opacity: .5}});
+            creep.rangedAttack(hostile);
+            //creep.moveTo(hostile, {visualizePathStyle: {stroke: '#f6b352', opacity: .5}});
         }
         if(_type == 'HEAL') {
             var creeplow = creep.room.find(FIND_MY_CREEPS, {

@@ -1,5 +1,6 @@
 var modern_transporter = {
     run: function(creep, _idget, _idput, _type, _forcemove, _back) {
+        creep.heal(creep);
         if(creep.ticksToLive < 250 && creep.store.getUsedCapacity() == 0) {creep.suicide();}
 
         if(creep.memory.transport && creep.store.getUsedCapacity() == 0) {

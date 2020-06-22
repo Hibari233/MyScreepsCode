@@ -76,7 +76,7 @@ let config = {
     changeMove: true,   // 【未启用】为creep.move增加对穿能力
     changeMoveTo: true, // 全面优化creep.moveTo，跨房移动也可以一个moveTo解决问题
     changeFindClostestByPath: true,     // 【未启用】轻度修改findClosestByPath，使得默认按照ignoreCreeps寻找最短
-    autoVisual: false,  // 【未启用】
+    autoVisual: true,  // 【未启用】
     enableFlee: false   // 【未启用】是否添加flee()函数，注意这会在Creep.prototype上添加官方未有键值，flee()用法见最底下module.exports处
 }
 // 运行时参数 
@@ -85,7 +85,7 @@ let hostileCostMatrixClearDelay = 500; // 自动清理相应时间前创建的�
 let coreLayoutRange = 3; // 核心布局半径，在离storage这个范围内频繁检查对穿（减少堵路的等待
 let avoidRooms = ['E18S8', 'E19S9', 'E21S9', 'E24S8', 'E35N6', 'E25S9',
     'E19N2', 'E18N3', 'E29N5', 'E29N3', 'E28N8', 'E33N9', 'E34N8',
-    'E37N6', 'E41N8', 'E39N11', 'E39N12', 'E39N13', 'E17S9']      // 永不踏入这些房间
+    'E37N6', 'E41N8', 'E39N11', 'E39N12', 'E39N13', 'E17S9', 'W23S5']      // 永不踏入这些房间
 let avoidExits = {
     'E35N7': 'E35N6',
     'fromRoom': 'toRoom'

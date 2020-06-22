@@ -77,7 +77,7 @@ module.exports = {
             state = STATE_RECOVERY;
         }
 
-        if (creep) creep.say('Saber')
+        //if (creep) creep.say('')
         if (state == STATE_REACTION && Game.time % REACTION_TIME[product] == 0) {
             if (creep) {
                 creepKill(creep)

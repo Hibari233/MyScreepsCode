@@ -1,13 +1,13 @@
 var transporter = {
     run: function(creep) {
-        if(creep.ticksToLive < 150 && creep.store.energy == 0) {creep.suicide();}
+        if(creep.ticksToLive < 200 && creep.store.energy == 0) {creep.suicide();}
         if(creep.memory.transport && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.transport = false;
 	    }
 	    if(!creep.memory.transport && creep.store.getFreeCapacity() == 0) {
 	        creep.memory.transport = true;
         }
-        if(creep.ticksToLive < 150) creep.memory.transport == true;
+        if(creep.ticksToLive < 200) creep.memory.transport == true;
 	    if(creep.memory.transport) {
             var des = Game.getObjectById(creep.memory.des);
             if(creep.transfer(des, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

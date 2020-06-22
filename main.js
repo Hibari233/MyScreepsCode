@@ -1,7 +1,6 @@
 var drone = require('drone');
 var upgrader = require('upgrader');
 var builder = require('builder');
-var scout = require('scout');
 var repairer = require('repairer');
 var transporter = require('transporter');
 var queen = require('queen');
@@ -17,7 +16,10 @@ var attacker = require('attacker');
 var attacker_drone = require('attacker_drone');
 var manager = require('manager');
 var attacker_team = require('attacker_team');
+var autoscout = require('autoscout');
+var outpost_defender = require('outpost_defender');
 require('optimize');
+var reserver = require('reserver');
 const labCtrl = require('labCtrl');
 
 module.exports.loop = function () {
@@ -35,15 +37,7 @@ module.exports.loop = function () {
     var drone12_num = 1;
     var drone13_num = 1;
     var mdrones1_num = 1;
-    var mdrones2_num = 0;
-    var scouts1_num = 1;
-    var scouts2_num = 1;
-    var scouts3_num = 1;
-    var scouts4_num = 1;
-    var scouts5_num = 0;
-    var scouts6_num = 0;
-    var scouts7_num = 0;
-    var scouts8_num = 1;
+    var mdrones2_num = 1;
     var transporter1s_num = 1;
     var transporter2s_num = 3;
     var transporter3s_num = 2;
@@ -51,21 +45,12 @@ module.exports.loop = function () {
     var transporter5s_num = 3;
     var transporter6s_num = 3;
     var modern_transporters_num = 0;
-    var transmitter1s_num = 1;
-    var transmitter2s_num = 1;
-    var transmitter3s_num = 1;
-    var transmitter4s_num = 1;
-    var transmitter5s_num = 0;
-    var guarder1s_num = 1;
-    var guarder2s_num = 1;
-    var guarder3s_num = 1;
-    var guarder4s_num = 1;
     var repairers_num = 1;
     var queen1s_num = 1;
     var queen2s_num = 1;
     var upgrader1s_num = 1;
     var upgrader2s_num = 1;
-    var builders_num = 1;
+    var builders_num = 0;
     var smallqueen1s_num = 1;
     var smallqueen2s_num = 1;
     var chargers_num = 1;
@@ -83,15 +68,16 @@ module.exports.loop = function () {
         }
     }
     
+    if(Game.cpu.bucket == 10000) {
+        Game.cpu.generatePixel();
+    }
+    
 
     // #########################   drones  #############################
     var drones1 = 0,drones2 = 0,drones3 = 0,drones4 = 0,drones5 = 0,drones6 = 0,drones7 = 0,drones8 = 0,drones9 = 0,drones12 = 0,drones13 = 0;
     var mdrones1 = 0,mdrones2 = 0;
-    var scouts1 = 0,scouts2 = 0,scouts3 = 0,scouts4 = 0,scouts5 = 0,scouts6 = 0,scouts7 = 0,scouts8 = 0;
     var transporter1s = 0,transporter2s = 0,transporter3s = 0,transporter4s = 0,transporter5s = 0,transporter6s = 0;
     var modern_transporters = 0;
-    var guarder1s = 0,guarder2s = 0,guarder3s = 0,guarder4s = 0;
-    var transmitter1s = 0,transmitter2s = 0,transmitter3s = 0,transmitter4s = 0,transmitter5s = 0;
     var upgrader1s = 0,upgrader2s = 0;
     var builders = 0;
     var queen1s = 0,queen2s = 0;
@@ -120,14 +106,6 @@ module.exports.loop = function () {
         if(creep.memory.role == 'drone' && creep.memory.s == 'source13') drones13 ++;
         if(creep.memory.role == 'mdrone' && creep.memory.s == 'mineral1') mdrones1 ++;
         if(creep.memory.role == 'mdrone' && creep.memory.s == 'mineral2') mdrones2 ++;
-        if(creep.memory.role == 'scout' && creep.memory.s == 'W22S7') scouts1 ++;
-        if(creep.memory.role == 'scout' && creep.memory.s == 'W23S8') scouts2 ++;
-        if(creep.memory.role == 'scout' && creep.memory.s == 'W23S9') scouts3 ++;
-        if(creep.memory.role == 'scout' && creep.memory.s == 'W23S13') scouts4 ++;
-        if(creep.memory.role == 'scout' && creep.memory.s == 'W22S12') scouts5 ++;
-        if(creep.memory.role == 'scout' && creep.memory.s == 'W22S13') scouts6 ++;
-        if(creep.memory.role == 'scout' && creep.memory.s == 'W21S13') scouts7 ++;
-        if(creep.memory.role == 'scout' && creep.memory.s == 'W23S7') scouts8 ++;
         if(creep.memory.role == 'transporter' && creep.memory.s == 'W22S8') transporter1s ++;
         if(creep.memory.role == 'transporter' && creep.memory.s == 'W23S8') transporter2s ++;
         if(creep.memory.role == 'transporter' && creep.memory.s == 'W23S9') transporter3s ++;
@@ -135,15 +113,6 @@ module.exports.loop = function () {
         if(creep.memory.role == 'transporter' && creep.memory.s == 'W23S13') transporter5s ++;
         if(creep.memory.role == 'transporter' && creep.memory.s == 'W23S7') transporter6s ++;
         if(creep.memory.role == 'modern_transporter') modern_transporters ++;
-        if(creep.memory.role == 'guarder' && creep.memory.s == 'W23S8') guarder1s ++;
-        if(creep.memory.role == 'guarder' && creep.memory.s == 'W23S9') guarder2s ++;
-        if(creep.memory.role == 'guarder' && creep.memory.s == 'W23S7') guarder3s ++;
-        if(creep.memory.role == 'guarder' && creep.memory.s == 'W23S13') guarder4s ++;
-        if(creep.memory.role == 'transmitter' && creep.memory.s == 'W23S8') transmitter1s ++;
-        if(creep.memory.role == 'transmitter' && creep.memory.s == 'W23S9') transmitter2s ++;
-        if(creep.memory.role == 'transmitter' && creep.memory.s == 'W23S7') transmitter3s ++;
-        if(creep.memory.role == 'transmitter' && creep.memory.s == 'W23S13') transmitter4s ++;
-        if(creep.memory.role == 'transmitter' && creep.memory.s == 'W22S12') transmitter5s ++;
         if(creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcabb19099fc012e63421f') upgrader1s ++;
         if(creep.memory.role == 'upgrader' && creep.memory.controller == '5bbcaba59099fc012e6340a8') upgrader2s ++;
         if(creep.memory.role == 'builder') builders ++;
@@ -152,10 +121,10 @@ module.exports.loop = function () {
         if(creep.memory.role == 'smallqueen' && creep.memory.source == '5e8ad848acf3f319ef9cb795') smallqueen1s ++;
         if(creep.memory.role == 'smallqueen' && creep.memory.source == '5ebc76fd6ae95c609c9c64cd') smallqueen2s ++;
         if(creep.memory.role == 'charger') chargers ++;
-        if(creep.memory.role == 'repairers') repairers ++;
-        if(creep.memory.role == 'claimers') claimers ++;
-        if(creep.memory.role == 'attackers') attackers ++;
-        if(creep.memory.role == 'attacker_drones') attacker_drones ++;
+        if(creep.memory.role == 'repairer') repairers ++;
+        if(creep.memory.role == 'claimer') claimers ++;
+        if(creep.memory.role == 'attacker') attackers ++;
+        if(creep.memory.role == 'attacker_drone') attacker_drones ++;
         if(creep.memory.role == 'manager' && creep.memory.room == 'W22S8') managers_W22S8 ++;
         if(creep.memory.role == 'manager' && creep.memory.room == 'W23S12') managers_W23S12 ++;
         if(creep.memory.role == 'attacker_team_attacker') attacker_team_attackers ++;
@@ -176,9 +145,6 @@ module.exports.loop = function () {
         console.log('drones13: ' + drones13);
         console.log('mdrones1: ' + mdrones1);
         console.log('mdrones2: ' + mdrones2);
-        console.log('scouts1: ' + scouts1);
-        console.log('scouts2: ' + scouts2);
-        console.log('scouts3: ' + scouts3);
         console.log('transporter1s: ' + transporter1s);
         console.log('transporter2s: ' + transporter2s);
         console.log('transporter3s: ' + transporter3s);
@@ -186,15 +152,6 @@ module.exports.loop = function () {
         console.log('transporter5s: ' + transporter5s);
         console.log('transporter6s: ' + transporter6s);
         console.log('modern_transporters:' + modern_transporters);
-        console.log('guarder1s: ' + guarder1s);
-        console.log('guarder2s: ' + guarder2s);
-        console.log('guarder3s: ' + guarder3s);
-        console.log('guarder4s: ' + guarder4s);
-        console.log('transmitter1s: ' + transmitter1s);
-        console.log('transmitter2s: ' + transmitter2s);
-        console.log('transmitter3s: ' + transmitter3s);
-        console.log('transmitter4s: ' + transmitter4s);
-        console.log('transmitter5s: ' + transmitter5s);
         console.log('upgrader1s: ' + upgrader1s);
         console.log('upgrader2s: ' + upgrader2s);
         console.log('builders: ' + builders);
@@ -220,7 +177,7 @@ module.exports.loop = function () {
     if(attackers < attackers_num && spawn_W22S8 != null) {
         var newName = 'attacker_' + Game.time;
         if(show_details) console.log('Spawning new attacker: ' + newName);
-        spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL], newName, 
+        spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'attacker'}});
     }
 
@@ -339,62 +296,6 @@ module.exports.loop = function () {
     }
 
     // #########################   scouts  #############################
-
-    if(scouts1 < scouts1_num && spawn_W22S8 != null) {
-        var newName = 'scout1_' + Game.time;
-        if(show_details) console.log('Spawning new scout1: ' + newName);
-        spawn_W22S8.spawnCreep([MOVE], newName, 
-            {memory: {role: 'scout', s: 'W22S7'}});        
-    }
-    
-    if(scouts2 < scouts2_num && spawn_W22S8 != null) {
-        var newName = 'scout2_' + Game.time;
-        if(show_details) console.log('Spawning new scout2: ' + newName);
-        spawn_W22S8.spawnCreep([MOVE], newName, 
-            {memory: {role: 'scout', s: 'W23S8'}});        
-    }
-    
-    if(scouts3 < scouts3_num && spawn_W22S8 != null) {
-        var newName = 'scout3_' + Game.time;
-        if(show_details) console.log('Spawning new scout3: ' + newName);
-        spawn_W22S8.spawnCreep([MOVE], newName, 
-            {memory: {role: 'scout', s: 'W23S9'}});        
-    }
-
-    if(scouts4 < scouts4_num && spawn_W23S12 != null) {
-        var newName = 'scout4_' + Game.time;
-        if(show_details) console.log('Spawning new scout4: ' + newName);
-        spawn_W23S12.spawnCreep([MOVE], newName, 
-            {memory: {role: 'scout', s: 'W23S13'}});
-    }
-
-    if(scouts5 < scouts5_num && spawn_W23S12 != null) {
-        var newName = 'scout5_' + Game.time;
-        if(show_details) console.log('Spawning new scout5: ' + newName);
-        spawn_W23S12.spawnCreep([MOVE], newName, 
-            {memory: {role: 'scout', s: 'W22S12'}});
-    }
-
-    if(scouts6 < scouts6_num && spawn_W23S12 != null) {
-        var newName = 'scout6_' + Game.time;
-        if(show_details) console.log('Spawning new scout6: ' + newName);
-        spawn_W23S12.spawnCreep([MOVE], newName, 
-            {memory: {role: 'scout', s: 'W22S13'}});
-    }
-
-    if(scouts7 < scouts7_num && spawn_W23S12 != null) {
-        var newName = 'scout7_' + Game.time;
-        if(show_details) console.log('Spawning new scout7: ' + newName);
-        spawn_W23S12.spawnCreep([MOVE], newName, 
-            {memory: {role: 'scout', s: 'W21S13'}});
-    }
-
-    if(scouts8 < scouts8_num && spawn_W22S8 != null) {
-        var newName = 'scout8_' + Game.time;
-        if(show_details) console.log('Spawning new scout8: ' + newName);
-        spawn_W22S8.spawnCreep([MOVE], newName, 
-            {memory: {role: 'scout', s: 'W23S7'}});
-    }
     // #########################   transporters  #############################
 
     if(transporter1s < transporter1s_num && spawn_W22S8 != null) {
@@ -445,73 +346,6 @@ module.exports.loop = function () {
         spawn_W22S8.spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'modern_transporter'}});
     }
-    // #########################   transmitters  #############################
-
-    if(transmitter1s < transmitter1s_num && spawn_W22S8 != null) {
-        var newName = 'transmitter1_' + Game.time;
-        if(show_details) console.log('Spawning new transmitter1: ' + newName);
-        spawn_W22S8.spawnCreep([CLAIM,CLAIM,MOVE,MOVE], newName, 
-            {memory: {role: 'transmitter', s: 'W23S8'}});        
-    }
-
-    if(transmitter2s < transmitter2s_num && spawn_W22S8 != null) {
-        var newName = 'transmitter2_' + Game.time;
-        if(show_details) console.log('Spawning new transmitter2: ' + newName);
-        spawn_W22S8.spawnCreep([CLAIM,CLAIM,MOVE,MOVE], newName, 
-            {memory: {role: 'transmitter', s: 'W23S9'}});        
-    }
-
-    if(transmitter3s < transmitter3s_num && spawn_W22S8 != null) {
-        var newName = 'transmitter3_' + Game.time;
-        if(show_details) console.log('Spawning new transmitter3: ' + newName);
-        spawn_W22S8.spawnCreep([CLAIM,CLAIM,MOVE,MOVE], newName, 
-            {memory: {role: 'transmitter', s: 'W23S7'}});        
-    }
-
-    if(transmitter4s < transmitter4s_num && spawn_W23S12 != null) {
-        var newName = 'transmitter4_' + Game.time;
-        if(show_details) console.log('Spawning new transmitter4: ' + newName);
-        spawn_W23S12.spawnCreep([CLAIM,CLAIM,MOVE,MOVE], newName, 
-            {memory: {role: 'transmitter', s: 'W23S13'}});        
-    }
-
-    if(transmitter5s < transmitter5s_num && spawn_W23S12 != null) {
-        var newName = 'transmitter5_' + Game.time;
-        if(show_details) console.log('Spawning new transmitter5: ' + newName);
-        spawn_W23S12.spawnCreep([CLAIM,CLAIM,MOVE,MOVE], newName, 
-            {memory: {role: 'transmitter', s: 'W22S12'}});        
-    }
-    
-    // #########################   guarders  #############################
-
-    if(guarder1s < guarder1s_num && spawn_W22S8 != null) {
-        var newName = 'guarder1_' + Game.time;
-        if(show_details) console.log('Spawning new guarder1: ' + newName);
-        spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'guarder', s: 'W23S8'}});        
-    }
-
-    if(guarder2s < guarder2s_num && spawn_W22S8 != null) {
-        var newName = 'guarder2_' + Game.time;
-        if(show_details) console.log('Spawning new guarder2: ' + newName);
-        spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'guarder', s: 'W23S9'}});
-    }
-
-    if(guarder3s < guarder3s_num && spawn_W22S8 != null) {
-        var newName = 'guarder3_' + Game.time;
-        if(show_details) console.log('Spawning new guarder3: ' + newName);
-        spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'guarder', s: 'W23S7'}});
-    }
-
-    if(guarder4s < guarder4s_num && spawn_W23S12 != null) {
-        var newName = 'guarder4_' + Game.time;
-        if(show_details) console.log('Spawning new guarder4: ' + newName);
-        spawn_W23S12.spawnCreep([ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
-            {memory: {role: 'guarder', s: 'W23S13'}});
-    }
-
     // #########################   others  #############################
 
     if(repairers < repairers_num && spawn_W22S8 != null) {
@@ -647,7 +481,7 @@ module.exports.loop = function () {
     });
     
     for (var i = 0; i < towers_W22S8.length; i ++) {
-        tower.run(towers_W22S8[i], 1000, 1000);
+        tower.run(towers_W22S8[i], 3000000, 3000000);
     }
 
     for (var i = 0; i < towers_W23S12.length; i ++) {
@@ -675,11 +509,11 @@ module.exports.loop = function () {
     var lab3 = Game.getObjectById('5eb6405b0ca530a8e52d5113');
     var lab4 = Game.getObjectById('5eb657c9663063dca91992fe');
     
-    labCtrl.run('W22S8', RESOURCE_LEMERGIUM_ALKALIDE, 10000);
-    labCtrl.run('W23S12', RESOURCE_HYDROXIDE, 40000);
+    //labCtrl.run('W22S8', RESOURCE_LEMERGIUM_ALKALIDE, 19900);
+    labCtrl.run('W23S12', RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE, 15000);
 
     var ob = Game.getObjectById('5ee152ce4b48f14c2e22c1ab');
-    ob.observeRoom('W21S8');
+    ob.observeRoom('W24S7');
 
     var factory = Game.getObjectById('5ec5738af4c123eab693ac43');
     factory.produce(RESOURCE_ENERGY);
@@ -687,7 +521,24 @@ module.exports.loop = function () {
     var powerspawn_W22S8 = Game.getObjectById('5ee12e48887b713a5aadb7f2');
     powerspawn_W22S8.processPower();
     
-    
+    autoscout.run('W23S7', 'W22S8');
+    autoscout.run('W23S8', 'W22S8');
+    autoscout.run('W23S9', 'W22S8');
+    autoscout.run('W23S13', 'W23S12');
+
+    outpost_defender.run('W23S7', 'W22S8');
+    outpost_defender.run('W23S8', 'W22S8');
+    outpost_defender.run('W23S9', 'W22S8');
+    outpost_defender.run('W23S13', 'W23S12');
+
+    reserver.run('W23S7', 'W22S8');
+    reserver.run('W23S8', 'W22S8');
+    reserver.run('W23S9', 'W22S8');
+    reserver.run('W23S13', 'W23S12');
+
+
+    autoSellEnergy(0.01, 'W22S8', Game.rooms['W22S8'].terminal.store.energy);
+
     /*
     const amountToSell = 2000, maxTransferEnergyCost = 2000;
     const orders = Game.market.getAllOrders({type: ORDER_BUY, resourceType: RESOURCE_ENERGY});
@@ -723,9 +574,6 @@ module.exports.loop = function () {
             
            //manager.run(creep, '5eccf73763e57e8d958fce0d', '5eb657c9663063dca91992fe', RESOURCE_CATALYZED_KEANIUM_ALKALIDE, false, false);
         }
-        if(creep.memory.role == 'scout') {
-            scout.run(creep);
-        }
         if(creep.memory.role == 'repairer') {
             repairer.run(creep);
         }
@@ -738,61 +586,33 @@ module.exports.loop = function () {
         if(creep.memory.role == 'charger') {
             charger.run(creep);
         }
-        if(creep.memory.role == 'transmitter') {
-            transmitter.run(creep);
-        }
-        if(creep.memory.role == 'guarder') {
-            guarder.run(creep);
-        }
         if(creep.memory.role == 'modern_transporter') {
-            modern_transporter.run(creep, '5cd385c089f34a3b76473899', '5e8ad848acf3f319ef9cb795', 'ALL', false, false);
+            //creep.moveTo(Game.flags.site, {visualizePathStyle: {stroke: '#f6b352', opacity: .5}});
+            modern_transporter.run(creep, '5ecf25c8e78f998e69e45ff3', '5eccf73763e57e8d958fce0d', 'ALL', false, false);
         }
         if(creep.memory.role == 'claimer') {
             //if(!creep.pos.inRangeTo(Game.flags.W23S12,20)) creep.moveTo(Game.flags.W23S12);
             claimer.run(creep);
         }
         if(creep.memory.role == 'attacker') {
-            /*
-            base2.boostCreep(creep);
-            lab2.boostCreep(creep);
-            base1.boostCreep(creep);
-            lab4.boostCreep(creep);
-            */
-            attacker.run(creep, 'pos', 'GUARD');
+            AutoBoostCreep(creep);
+            attacker.run(creep, 'pos', 'AUTO');
         }
         if(creep.memory.role == 'attacker_drone') {
-            /*
-            base1.boostCreep(creep);
-            lab2.boostCreep(creep);
-            lab3.boostCreep(creep);
-            */
             attacker_drone.run(creep, 'pos2', 'ATTACK');
         }
         if(creep.memory.role == 'manager' && creep.memory.room == 'W22S8'){
             //var lab = getNotEmptyLab(creep);
-            //creep.moveTo(Game.flags.W22S8);
-            manager.run(creep, '5e8ad848acf3f319ef9cb795', '5eccf73763e57e8d958fce0d', RESOURCE_ENERGY, false, false, false);
+            //manager.run(creep, '5eccf73763e57e8d958fce0d', '5ee1c7b77e5d253e8d4df2de', 'XKHO2', false, false, false);
         }
         if(creep.memory.role == 'manager' && creep.memory.room == 'W23S12'){
-            //manager.run(creep, '5ecfd262b13b761e358a3b71', '5ecc85137e4d0c428bc08d55', 'ALL', false, false);
+            //manager.run(creep, '', '5ecc85137e4d0c428bc08d55', 'XKH2O', true, false, false);
         }
         if(creep.memory.role == 'attacker_team_attacker') {
             var attacker_creep = creep;
-            base1.boostCreep(creep);
-            base2.boostCreep(creep);
-            lab1.boostCreep(creep);
-            lab2.boostCreep(creep);
-            lab3.boostCreep(creep);
-            lab4.boostCreep(creep);
         }
         if(creep.memory.role == 'attacker_team_healer') {
             var attacker_creep2 = creep;
-            base1.boostCreep(creep);
-            base2.boostCreep(creep);
-            lab1.boostCreep(creep);
-            lab2.boostCreep(creep);
-            lab3.boostCreep(creep);
-            lab4.boostCreep(creep);
         }
     }
     if(attacker_creep != undefined && attacker_creep2 != undefined)
@@ -818,4 +638,38 @@ function getNotEmptyLab(creep) {
         }
     });
     return lab;
+}
+
+function gettombstone(creep) {
+    var stone = creep.pos.findClosestByPath(FIND_TOMBSTONES, {
+        filter: (structure) => {
+            return structure.store.energy > 0;
+        }
+    });
+    return stone;
+}
+
+function AutoBoostCreep(creep) {
+    var labs = creep.room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return structure.structureType == STRUCTURE_LAB;
+        }
+    });
+    for (var lab in labs) {
+        labs[lab].boostCreep(creep);
+    }
+}
+
+function autoSellEnergy(val, roomName, limit) {
+    var cnt = val, ctd = undefined;
+    var orders = Game.market.getAllOrders({type: ORDER_BUY, resourceType: RESOURCE_ENERGY});
+    for (var i = 0; i < orders.length; i++) {
+        var cost = Game.market.calcTransactionCost(10000, roomName, orders[i].roomName);
+        var sjval = orders[i].price * 10000 / (10000+cost);
+        if (sjval > cnt) {ctd = orders[i]; cnt = sjval; }
+    }
+    if (ctd && ctd.price > val) {
+        var amount = Math.min(ctd.amount, Math.floor(limit * cnt / ctd.price));
+        Game.market.deal(ctd.id, amount, roomName);
+    }
 }
