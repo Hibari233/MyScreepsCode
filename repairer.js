@@ -8,12 +8,15 @@ var repairer = {
 	        creep.memory.repairing = true;
 	    }
 	    if(creep.memory.repairing) {
+            /*
             var str = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_RAMPART && structure.hits < 4000000) ||
-                            (structure.structureType == STRUCTURE_WALL && structure.hits < 4000000 );
+                    return (structure.structureType == STRUCTURE_RAMPART && structure.hits < 7000000) ||
+                            (structure.structureType == STRUCTURE_WALL && structure.hits < 7000000 );
                 }
             });
+            */
+            var str = Game.getObjectById('5edf1bd42931bc5d4dede93d');
             /*
             if(Game.time % 200 == 0)
                 str.sort((a,b) => a.hits - b.hits);

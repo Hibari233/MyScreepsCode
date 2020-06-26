@@ -21,41 +21,47 @@ var outpost_defender = require('outpost_defender');
 require('optimize');
 var reserver = require('reserver');
 const labCtrl = require('labCtrl');
+var outpost_repairer = require('outpost_repairer');
+var auto_builder = require('auto_builder');
+var attacker_1creep = require('attacker_1creep');
+var attacker_2creep_team = require('attacker_2creep_team');
+var attacker_4creep_team = require('attacker_4creep_team');
 
 module.exports.loop = function () {
     if(Game.shard.name === 'shard2') return;
+    //if(Game.shard.name === 'shard3') return;
     const show_details = false;
-    var drone1_num = 1;
-    var drone2_num = 1;
-    var drone3_num = 1;
-    var drone4_num = 1;
-    var drone5_num = 1;
-    var drone6_num = 1;
-    var drone7_num = 1;
-    var drone8_num = 1;
-    var drone9_num = 1;
-    var drone12_num = 1;
-    var drone13_num = 1;
-    var mdrones1_num = 1;
-    var mdrones2_num = 1;
-    var transporter1s_num = 1;
-    var transporter2s_num = 3;
-    var transporter3s_num = 2;
-    var transporter4s_num = 1;
-    var transporter5s_num = 3;
-    var transporter6s_num = 3;
+    var drone1_num = 0;
+    var drone2_num = 0;
+    var drone3_num = 0;
+    var drone4_num = 0;
+    var drone5_num = 0;
+    var drone6_num = 0;
+    var drone7_num = 0;
+    var drone8_num = 0;
+    var drone9_num = 0;
+    var drone12_num = 0;
+    var drone13_num = 0;
+    var mdrones1_num = 0;
+    var mdrones2_num = 0;
+    var transporter1s_num = 0;
+    var transporter2s_num = 0;
+    var transporter3s_num = 0;
+    var transporter4s_num = 0;
+    var transporter5s_num = 0;
+    var transporter6s_num = 0;
     var modern_transporters_num = 0;
-    var repairers_num = 1;
+    var repairers_num = 0;
     var queen1s_num = 1;
     var queen2s_num = 1;
-    var upgrader1s_num = 1;
-    var upgrader2s_num = 1;
+    var upgrader1s_num = 0;
+    var upgrader2s_num = 0;
     var builders_num = 0;
     var smallqueen1s_num = 1;
     var smallqueen2s_num = 1;
-    var chargers_num = 1;
+    var chargers_num = 2;
     var claimers_num = 0;
-    var attackers_num = 0;
+    var attackers_num = 10;
     var attacker_drones_num = 0;
     var attacker_team_attacker_num = 0;
     var attacker_team_healer_num = 0;
@@ -85,7 +91,7 @@ module.exports.loop = function () {
     var chargers = 0;
     var repairers = 0;
     var claimers = 0;
-    var attackers = 0;
+    var attackers = 1;
     var attacker_drones = 0;
     var managers_W22S8 = 0;
     var managers_W23S12 = 0;
@@ -177,7 +183,7 @@ module.exports.loop = function () {
     if(attackers < attackers_num && spawn_W22S8 != null) {
         var newName = 'attacker_' + Game.time;
         if(show_details) console.log('Spawning new attacker: ' + newName);
-        spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
+        spawn_W22S8.spawnCreep([RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,RANGED_ATTACK,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'attacker'}});
     }
 
@@ -201,6 +207,7 @@ module.exports.loop = function () {
         spawn_W22S8.spawnCreep([TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,TOUGH,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,HEAL,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'attacker_team_healer'}});
     }
+    
     // #########################   drones  #############################
     
     if(drones1 < drone1_num && spawn_W22S8 != null) {
@@ -417,7 +424,7 @@ module.exports.loop = function () {
         spawn_W22S8.spawnCreep([CLAIM,MOVE,MOVE,MOVE,MOVE], newName, 
             {memory: {role: 'claimer'}});
     }
-
+    
     if(managers_W22S8 < managers_W22S8_num && spawn_W22S8 != null) {
         var newName = 'manager_W22S8_' + Game.time;
         if(show_details) console.log('Spawning new manager_W22S8: ' + newName);
@@ -481,13 +488,13 @@ module.exports.loop = function () {
     });
     
     for (var i = 0; i < towers_W22S8.length; i ++) {
-        tower.run(towers_W22S8[i], 3000000, 3000000);
+        tower.run(towers_W22S8[i], 100000, 100000);
     }
 
     for (var i = 0; i < towers_W23S12.length; i ++) {
         tower.run(towers_W23S12[i], 100000, 100000);
     }
-	
+	/*
     var linkbase_W22S8_1 = Game.getObjectById('5edf11ab5c8fed76f30aedad');
     var linkbase_W22S8_2 = Game.getObjectById('5e8d2e96af620e6f08ccd3f7');
     var linkbase_W22S8_3 = Game.getObjectById('5ee083a2adccaf3c5584f062');
@@ -496,7 +503,7 @@ module.exports.loop = function () {
         if(linkbase_W22S8_1.cooldown == 0) linkbase_W22S8_1.transferEnergy(linkto_W22S8);
         else if(linkbase_W22S8_2.cooldown == 0) linkbase_W22S8_2.transferEnergy(linkto_W22S8);
         else linkbase_W22S8_3.transferEnergy(linkto_W22S8);
-    }
+    }*/
 
     var linkbase_W23S12 = Game.getObjectById('5ebdf6d91ba74871135b4bc0');
     var linkto_W23S12 = Game.getObjectById('5ebe186c26b7673a4ae868f9');
@@ -510,34 +517,51 @@ module.exports.loop = function () {
     var lab4 = Game.getObjectById('5eb657c9663063dca91992fe');
     
     //labCtrl.run('W22S8', RESOURCE_LEMERGIUM_ALKALIDE, 19900);
-    labCtrl.run('W23S12', RESOURCE_CATALYZED_LEMERGIUM_ALKALIDE, 15000);
+    labCtrl.run('W23S12', 'XLHO2', 20000);
 
     var ob = Game.getObjectById('5ee152ce4b48f14c2e22c1ab');
-    ob.observeRoom('W24S7');
+    ob.observeRoom('W26S6');
 
     var factory = Game.getObjectById('5ec5738af4c123eab693ac43');
     factory.produce(RESOURCE_ENERGY);
     
     var powerspawn_W22S8 = Game.getObjectById('5ee12e48887b713a5aadb7f2');
     powerspawn_W22S8.processPower();
-    
+    /*
     autoscout.run('W23S7', 'W22S8');
     autoscout.run('W23S8', 'W22S8');
     autoscout.run('W23S9', 'W22S8');
     autoscout.run('W23S13', 'W23S12');
-
+    */
+    /*
     outpost_defender.run('W23S7', 'W22S8');
     outpost_defender.run('W23S8', 'W22S8');
     outpost_defender.run('W23S9', 'W22S8');
     outpost_defender.run('W23S13', 'W23S12');
-
+    */
+    /*
+    outpost_repairer.run('W23S7', 'W22S8');
+    outpost_repairer.run('W23S8', 'W22S8');
+    outpost_repairer.run('W23S9', 'W22S8');
+    outpost_repairer.run('W23S13', 'W23S12');
+    */
+    /*
     reserver.run('W23S7', 'W22S8');
     reserver.run('W23S8', 'W22S8');
     reserver.run('W23S9', 'W22S8');
     reserver.run('W23S13', 'W23S12');
+    */
+    //attacker_2creep_team.run('W22S8', 'pos', 'ATTACK');
+    //attacker_1creep.run('W22S8','pos2','GUARD');
 
 
-    autoSellEnergy(0.01, 'W22S8', Game.rooms['W22S8'].terminal.store.energy);
+    //auto_builder.run('W23S8', 'W22S8');
+    //auto_builder.run('W23S9', 'W22S8');
+    //auto_builder.run('W23S7', 'W22S8');
+
+    //attacker_4creep_team.run('W22S8', 'pos', 'MOVE');
+    
+    //autoSellEnergy(0.01, 'W22S8', Game.rooms['W22S8'].terminal.store.energy);
 
     /*
     const amountToSell = 2000, maxTransferEnergyCost = 2000;
@@ -575,7 +599,7 @@ module.exports.loop = function () {
            //manager.run(creep, '5eccf73763e57e8d958fce0d', '5eb657c9663063dca91992fe', RESOURCE_CATALYZED_KEANIUM_ALKALIDE, false, false);
         }
         if(creep.memory.role == 'repairer') {
-            repairer.run(creep);
+           repairer.run(creep);
         }
         if(creep.memory.role == 'transporter') {
             transporter.run(creep);
@@ -588,25 +612,28 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'modern_transporter') {
             //creep.moveTo(Game.flags.site, {visualizePathStyle: {stroke: '#f6b352', opacity: .5}});
-            modern_transporter.run(creep, '5ecf25c8e78f998e69e45ff3', '5eccf73763e57e8d958fce0d', 'ALL', false, false);
+            modern_transporter.run(creep, '5eccf73763e57e8d958fce0d', '5eccf73763e57e8d958fce0d', 'XZHO2', false, false);
         }
         if(creep.memory.role == 'claimer') {
             //if(!creep.pos.inRangeTo(Game.flags.W23S12,20)) creep.moveTo(Game.flags.W23S12);
             claimer.run(creep);
         }
         if(creep.memory.role == 'attacker') {
+            creep.say('大刺蛇tql orz%', true);
             AutoBoostCreep(creep);
-            attacker.run(creep, 'pos', 'AUTO');
+            attacker.run(creep, 'pos', 'GUARD');
         }
         if(creep.memory.role == 'attacker_drone') {
             attacker_drone.run(creep, 'pos2', 'ATTACK');
         }
         if(creep.memory.role == 'manager' && creep.memory.room == 'W22S8'){
             //var lab = getNotEmptyLab(creep);
-            //manager.run(creep, '5eccf73763e57e8d958fce0d', '5ee1c7b77e5d253e8d4df2de', 'XKHO2', false, false, false);
+            creep.say('chirs! orz!', true);
+            manager.run(creep, '5eccf73763e57e8d958fce0d', '5eb6405b0ca530a8e52d5113', 'XZHO2', false, false, false);
         }
         if(creep.memory.role == 'manager' && creep.memory.room == 'W23S12'){
-            //manager.run(creep, '', '5ecc85137e4d0c428bc08d55', 'XKH2O', true, false, false);
+            creep.suicide();
+            //manager.run(creep, '5ecfd262b13b761e358a3b71', '5ec5738af4c123eab693ac43', RESOURCE_BATTERY, false, false, false);
         }
         if(creep.memory.role == 'attacker_team_attacker') {
             var attacker_creep = creep;

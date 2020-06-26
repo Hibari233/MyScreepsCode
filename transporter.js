@@ -20,7 +20,7 @@ var transporter = {
             const targets = Game.rooms[p].find(FIND_STRUCTURES, {
                 filter: object => {
                     return object.structureType == STRUCTURE_CONTAINER &&
-                             object.store.energy > 0;
+                             object.store.energy > creep.store.getFreeCapacity();
                 }
             });
             targets.sort((a,b) => a.store.energy < b.store.energy);

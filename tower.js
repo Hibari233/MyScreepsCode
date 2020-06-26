@@ -1,3 +1,5 @@
+const { random } = require("lodash");
+
 var tower = {
     run: function(tower, ramhp, wallhp) {
         var structures = tower.room.find(FIND_STRUCTURES, {
@@ -19,10 +21,11 @@ var tower = {
             }
         });
         if(hostile[0]) {
-            tower.attack(hostile[0]);
+            var a = random(0,3);
+            tower.attack(hostile[a]);
+            //tower.heal(friends[0]);
         }
         else{
-            tower.heal(friends[0]);
             tower.repair(structures[0]);
         }
 	}

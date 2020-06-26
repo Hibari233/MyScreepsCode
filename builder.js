@@ -41,6 +41,18 @@ var builder = {
                 });
                 if(creep.harvest(sources) == ERR_NOT_IN_RANGE) {creep.moveTo(sources);}
             }
+            else if(mode == 'CONTAINER') {
+                const target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: object => {
+                        return (object.structureType == STRUCTURE_CONTAINER) &&
+                                object.store.energy > creep.store.getFreeCapacity();
+                    }
+                });
+                //targets.sort((a,b) => a.store.energy < b.store.energy);
+                if(creep.withdraw(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                }
+            }
             /*
             const targets = creep.room.find(FIND_STRUCTURES, {
                 filter: object => {

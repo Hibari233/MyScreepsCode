@@ -6,6 +6,7 @@ const body_against_cores = [ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATTACK,ATT
 module.exports = {
     run: function (roomName, spawnRoomName) {
         const creepName = 'outpost_defender_' + roomName;
+        if(!Game.rooms[roomName]) return;
         var cores = Game.rooms[roomName].find(FIND_STRUCTURES, {
             filter: (structure) => {
                 return structure.structureType == STRUCTURE_INVADER_CORE;
@@ -13,27 +14,32 @@ module.exports = {
         });
         var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
         var creep = Game.creeps[creepName];
-        if(!cores[0] && !hostiles[0] && creep) creep.suicide();
-        if (!creep && cores[0]) {
-            autoSpawnCreep(creepName, spawnRoomName, body_against_cores);
+        if(!cores.length && !hostiles.length && creep) creep.suicide();
+        if (!creep && cores.length) {
+            autoSpawnCreep(creepName, spawnRoomName, body_against_cores, 'core');
         }
-        else if (!creep && hostiles[0]) {
-            autoSpawnCreep(creepName, spawnRoomName, body_against_hostiles);
+        else if (!creep && hostiles.length) {
+            autoSpawnCreep(creepName, spawnRoomName, body_against_hostiles, 'hostiles');
         }
-        else {
-            if(cores[0] && creep.attack(cores[0]) == ERR_NOT_IN_RANGE) creep.moveTo(cores[0]);
-            if(hostiles[0] && creep.rangedAttack(hostiles[0])) { 
-                creep.moveTo(hostiles[0]);
+        else if(creep) {
+            console.log('Incoming Enemies or Cores In Outpost:' + roomName);
+            if(creep.memory.type == 'core') {
+                if(creep.attack(cores[0]) == ERR_NOT_IN_RANGE) creep.moveTo(cores[0]);
+            }
+            if(creep.memory.type == 'hostiles') {
                 creep.heal(creep);
+                if(creep.rangedAttack(hostiles[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(hostiles[0]);
+                }
             }
         }
     }
 }
 
-function autoSpawnCreep(creepName, spawnRoomName, body) {
+function autoSpawnCreep(creepName, spawnRoomName, body, memory) {
     var spawn = getAvaliableSpawn(spawnRoomName);
     if (spawn) {
-        spawn.spawnCreep(body, creepName, {memory: {role: 'outpost_defender' }});
+        spawn.spawnCreep(body, creepName, {memory: {role: 'outpost_defender', type: memory }});
     }
 }
 

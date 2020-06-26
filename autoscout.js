@@ -12,6 +12,13 @@ module.exports = {
         }
         else {
             if(!creep.pos.inRangeTo(new RoomPosition(25, 25, roomName),20)) creep.moveTo(new RoomPosition(25, 25, roomName));
+            else {
+                var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
+                var PC_hostiles = Game.rooms[roomName].find(FIND_HOSTILE_POWER_CREEPS);
+                if(hostiles.length != 0 || PC_hostiles.length != 0) {
+                    console.log('Incoming Enemies in Room: ' + roomName + ' Please Watch Out Room: ' + spawnRoomName);
+                }
+            }
         }
     }
 }

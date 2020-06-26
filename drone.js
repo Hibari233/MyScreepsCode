@@ -1,7 +1,7 @@
 var builder = require('builder');
 var drone = {
     run: function(creep) {
-
+        if(creep.hits < creep.hitsMax) creep.suicide();
         if(!creep.memory.drone && creep.store[RESOURCE_ENERGY] == 0) {
             creep.memory.drone = true;
 	    }

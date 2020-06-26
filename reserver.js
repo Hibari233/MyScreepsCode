@@ -11,7 +11,7 @@ module.exports = {
             autoSpawnCreep(creepName, spawnRoomName);
         }
         else {
-            if(!creep.pos.inRangeTo(new RoomPosition(25, 25, roomName),25)) creep.moveTo(new RoomPosition(25, 25, roomName));
+            if(!creep.pos.inRangeTo(new RoomPosition(25, 25, roomName),24)) creep.moveTo(new RoomPosition(25, 25, roomName));
             else {
                 if(creep.room.controller) {
                     if(!creep.room.controller.my && creep.room.controller.owner != undefined) {
